@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+package user.v1;
+
+option go_package = "github.com/11SF/cap-common-proto/v1/user;userv1";
+
+// UserService provides user management operations
+service UserService {
+  // CreateUser creates a new user account
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+
+  // GetUser retrieves user information by user ID
+  rpc GetUser(GetUserRequest) returns (GetUserResponse);
+
+  // GetUserByEmail retrieves user information by email
+  rpc GetUserByEmail(GetUserByEmailRequest) returns (GetUserResponse);
+
+  // UpdateUser updates user information
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
+
+  // ValidateCredentials validates user credentials for login
+  rpc ValidateCredentials(ValidateCredentialsRequest) returns (ValidateCredentialsResponse);
+}
+
+// CreateUserRequest represents the create user request
+message CreateUserRequest {
+  string username = 1;
+  string email = 2;
+  string password = 3; // Will be hashed in the service
+  string picture_profile = 4;
+  map<string, string> custom_attributes = 5;
+}
+
+// CreateUserResponse represents the create user response
+message CreateUserResponse {
+  string user_id = 1;
+  string username = 2;
+  string email = 3;
+  string picture_profile = 4;
+  string created_at = 5;
+}
+
+// GetUserRequest represents the get user request
+message GetUserRequest {
+  string user_id = 1;
+}
+
+// GetUserByEmailRequest represents the get user by email request
+message GetUserByEmailRequest {
+  string email = 1;
+}
+
+// GetUserResponse represents the user response
+message GetUserResponse {
+  string user_id = 1;
+  string username = 2;
+  string email = 3;
+  string picture_profile = 4;
+  string password_hash = 5; // For internal use only
+  string created_at = 6;
+  string updated_at = 7;
+  map<string, string> custom_attributes = 8;
+}
+
+// UpdateUserRequest represents the update user request
+message UpdateUserRequest {
+  string user_id = 1;
+  string username = 2;
+  string picture_profile = 3;
+  map<string, string> custom_attributes = 4;
+}
+
+// UpdateUserResponse represents the update user response
+message UpdateUserResponse {
+  string user_id = 1;
+  string username = 2;
+  string email = 3;
+  string picture_profile = 4;
+  string updated_at = 5;
+}
+
+// ValidateCredentialsRequest represents the validate credentials request
+message ValidateCredentialsRequest {
+  string email = 1;
+  string password = 2;
+}
+
+// ValidateCredentialsResponse represents the validate credentials response
+message ValidateCredentialsResponse {
+  bool is_valid = 1;
+  string user_id = 2;
+  string username = 3;
+  string email = 4;
+  string picture_profile = 5;
+}

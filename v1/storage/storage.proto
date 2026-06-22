@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package storage.v1;
+
+option go_package = "github.com/11SF/cap-common-proto/v1/storage;storagev1";
+
+// StorageService is a thin anti-corruption layer in front of the external
+// storage-management HTTP API. It owns no data of its own — it only
+// translates between our domain shapes and that system's wire format.
+service StorageService {
+  rpc UploadImage(UploadImageRequest) returns (UploadImageResponse);
+  rpc GetImageUrl(GetImageUrlRequest) returns (GetImageUrlResponse);
+  rpc DeleteImage(DeleteImageRequest) returns (DeleteImageResponse);
+}
+
+message UploadImageRequest {
+  string bucket_name = 1;
+  string filename = 2;
+  string base64 = 3;
+}
+
+message UploadImageResponse {
+  string filename = 1;
+  string bucket = 2;
+  string image_path = 3;
+}
+
+message GetImageUrlRequest {
+  string image_path = 1;
+}
+
+message GetImageUrlResponse {
+  string image_url = 1;
+}
+
+message DeleteImageRequest {
+  string image_path = 1;
+}
+
+message DeleteImageResponse {
+  bool success = 1;
+}

@@ -1,0 +1,125 @@
+syntax = "proto3";
+
+package session.v1;
+
+option go_package = "github.com/11SF/cap-common-proto/v1/session;sessionv1";
+
+// SessionService is owned by the session aggregate: it is the only thing
+// allowed to write to the sessions table.
+service SessionService {
+  // CreateSession creates a new session with tokens
+  rpc CreateSession(CreateSessionRequest) returns (CreateSessionResponse);
+
+  // GetSession retrieves session information
+  rpc GetSession(GetSessionRequest) returns (GetSessionResponse);
+
+  // RefreshSession refreshes an existing session and generates new tokens
+  rpc RefreshSession(RefreshSessionRequest) returns (RefreshSessionResponse);
+
+  // ValidateToken validates an access token
+  rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
+
+  // RevokeSession revokes a session (logout)
+  rpc RevokeSession(RevokeSessionRequest) returns (RevokeSessionResponse);
+}
+
+// AuthorizationCodeService is owned by the authorization-code aggregate: it
+// is the only thing allowed to write to the authorization_codes table.
+// Modeled here (not in core-client-management) because an authorization code
+// is a short-lived, one-time-use credential, same shape as a refresh token.
+service AuthorizationCodeService {
+  // IssueAuthorizationCode issues a short-lived code after the resource
+  // owner approves an OAuth2 consent request.
+  rpc IssueAuthorizationCode(IssueAuthorizationCodeRequest) returns (IssueAuthorizationCodeResponse);
+
+  // RedeemAuthorizationCode exchanges a code for the identity/scope it was
+  // issued for. One-time use: a second redemption attempt fails.
+  rpc RedeemAuthorizationCode(RedeemAuthorizationCodeRequest) returns (RedeemAuthorizationCodeResponse);
+}
+
+message CreateSessionRequest {
+  string user_id = 1;
+  string username = 2;
+  string email = 3;
+  string device_info = 4;
+  map<string, string> custom_attributes = 5;
+}
+
+message CreateSessionResponse {
+  string session_id = 1;
+  string access_token = 2;
+  string refresh_token = 3;
+  string token_type = 4;
+  int64 expires_in = 5;
+  string created_at = 6;
+}
+
+message GetSessionRequest {
+  string session_id = 1;
+}
+
+message GetSessionResponse {
+  string session_id = 1;
+  string user_id = 2;
+  string device_info = 3;
+  string created_at = 4;
+  string last_accessed_at = 5;
+  bool is_active = 6;
+}
+
+message RefreshSessionRequest {
+  string refresh_token = 1;
+}
+
+message RefreshSessionResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  string token_type = 3;
+  int64 expires_in = 4;
+}
+
+message ValidateTokenRequest {
+  string access_token = 1;
+}
+
+message ValidateTokenResponse {
+  bool is_valid = 1;
+  string user_id = 2;
+  string username = 3;
+  string email = 4;
+  int64 expires_at = 5;
+}
+
+message RevokeSessionRequest {
+  string session_id = 1;
+  string user_id = 2;
+}
+
+message RevokeSessionResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message IssueAuthorizationCodeRequest {
+  string user_id = 1;
+  string client_id = 2;
+  string redirect_uri = 3;
+  string scope = 4;
+}
+
+message IssueAuthorizationCodeResponse {
+  string code = 1;
+  int64 expires_in = 2;
+}
+
+message RedeemAuthorizationCodeRequest {
+  string code = 1;
+  string client_id = 2;
+  string redirect_uri = 3;
+}
+
+message RedeemAuthorizationCodeResponse {
+  string user_id = 1;
+  string client_id = 2;
+  string scope = 3;
+}

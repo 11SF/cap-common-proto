@@ -1,0 +1,109 @@
+syntax = "proto3";
+
+package client.v1;
+
+option go_package = "github.com/11SF/cap-common-proto/v1/client;clientv1";
+
+// ApplicationService is owned by the application aggregate: the registry of
+// OAuth2 client applications belonging to a developer/owner.
+service ApplicationService {
+  rpc RegisterApplication(RegisterApplicationRequest) returns (RegisterApplicationResponse);
+  rpc GetApplication(GetApplicationRequest) returns (GetApplicationResponse);
+  rpc ListApplicationsByOwner(ListApplicationsByOwnerRequest) returns (ListApplicationsByOwnerResponse);
+}
+
+// ClientService is owned by the client aggregate: OAuth2 client_id/secret
+// pairs issued under an application. It may read application data to check
+// ownership, but never writes to the applications table.
+service ClientService {
+  rpc CreateClient(CreateClientRequest) returns (CreateClientResponse);
+  rpc RefreshClientSecret(RefreshClientSecretRequest) returns (RefreshClientSecretResponse);
+  rpc GetClient(GetClientRequest) returns (GetClientResponse);
+  rpc VerifyClientSecret(VerifyClientSecretRequest) returns (VerifyClientSecretResponse);
+}
+
+message RegisterApplicationRequest {
+  string owner_user_id = 1;
+  string app_name = 2;
+  string app_desc = 3;
+  string logo_url = 4;
+  repeated string scope = 5;
+  repeated string redirect_uris = 6;
+}
+
+message RegisterApplicationResponse {
+  string app_id = 1;
+  string app_name = 2;
+  string created_at = 3;
+}
+
+message GetApplicationRequest {
+  string app_id = 1;
+}
+
+message GetApplicationResponse {
+  string app_id = 1;
+  string owner_user_id = 2;
+  string app_name = 3;
+  string app_desc = 4;
+  string logo_url = 5;
+  repeated string scope = 6;
+  repeated string redirect_uris = 7;
+  string created_at = 8;
+  string updated_at = 9;
+}
+
+message ListApplicationsByOwnerRequest {
+  string owner_user_id = 1;
+}
+
+message ListApplicationsByOwnerResponse {
+  repeated GetApplicationResponse applications = 1;
+}
+
+message CreateClientRequest {
+  string owner_user_id = 1; // used to verify ownership of app_id
+  string app_id = 2;
+  string client_name = 3;
+}
+
+message CreateClientResponse {
+  string client_id = 1;
+  string client_secret = 2; // plaintext, returned once only
+  string client_name = 3;
+  string app_id = 4;
+  string created_at = 5;
+}
+
+message RefreshClientSecretRequest {
+  string owner_user_id = 1; // used to verify ownership of app_id
+  string app_id = 2;
+  string client_id = 3;
+}
+
+message RefreshClientSecretResponse {
+  string client_id = 1;
+  string client_secret = 2; // plaintext, returned once only
+}
+
+message GetClientRequest {
+  string client_id = 1;
+}
+
+message GetClientResponse {
+  string client_id = 1;
+  string client_name = 2;
+  string app_id = 3;
+  string status = 4;
+  string created_at = 5;
+}
+
+message VerifyClientSecretRequest {
+  string client_id = 1;
+  string client_secret = 2;
+}
+
+message VerifyClientSecretResponse {
+  bool is_valid = 1;
+  string app_id = 2;
+}

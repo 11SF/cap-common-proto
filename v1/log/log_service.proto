@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package log.v1;
+
+option go_package = "github.com/11SF/cap-common-proto/v1/log;logv1";
+
+// LogService provides audit and activity logging operations
+service LogService {
+  // CreateLog creates a new log entry
+  rpc CreateLog(CreateLogRequest) returns (CreateLogResponse);
+
+  // GetLogs retrieves logs with filters
+  rpc GetLogs(GetLogsRequest) returns (GetLogsResponse);
+
+  // GetUserLogs retrieves logs for a specific user
+  rpc GetUserLogs(GetUserLogsRequest) returns (GetLogsResponse);
+}
+
+// CreateLogRequest represents the create log request
+message CreateLogRequest {
+  string user_id = 1;
+  string action_type = 2; // LOGIN, LOGOUT, REGISTER, TOKEN_REFRESH, etc.
+  string ip_address = 3;
+  string device_info = 4;
+  string status = 5; // SUCCESS, FAILED
+  string message = 6;
+  map<string, string> metadata = 7;
+}
+
+// CreateLogResponse represents the create log response
+message CreateLogResponse {
+  string log_id = 1;
+  string created_at = 2;
+}
+
+// GetLogsRequest represents the get logs request
+message GetLogsRequest {
+  string user_id = 1;
+  string action_type = 2;
+  string status = 3;
+  string start_date = 4;
+  string end_date = 5;
+  int32 page = 6;
+  int32 limit = 7;
+}
+
+// GetUserLogsRequest represents the get user logs request
+message GetUserLogsRequest {
+  string user_id = 1;
+  int32 page = 2;
+  int32 limit = 3;
+}
+
+// GetLogsResponse represents the get logs response
+message GetLogsResponse {
+  repeated LogEntry logs = 1;
+  int32 total = 2;
+  int32 page = 3;
+  int32 limit = 4;
+}
+
+// LogEntry represents a single log entry
+message LogEntry {
+  string log_id = 1;
+  string user_id = 2;
+  string action_type = 3;
+  string ip_address = 4;
+  string device_info = 5;
+  string status = 6;
+  string message = 7;
+  map<string, string> metadata = 8;
+  string created_at = 9;
+}

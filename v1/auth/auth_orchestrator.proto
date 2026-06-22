@@ -1,0 +1,171 @@
+syntax = "proto3";
+
+package auth.v1;
+
+option go_package = "github.com/11SF/cap-common-proto/v1/auth;authv1";
+
+// AuthOrchestrator orchestrates authentication flows
+service AuthOrchestrator {
+  // Login handles the complete login flow
+  rpc Login(LoginRequest) returns (LoginResponse);
+
+  // Register handles the complete registration flow
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+
+  // RefreshToken handles the token refresh flow
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
+
+  // VerifyToken validates and returns token information
+  rpc VerifyToken(VerifyTokenRequest) returns (VerifyTokenResponse);
+
+  // Logout handles the logout flow
+  rpc Logout(LogoutRequest) returns (LogoutResponse);
+
+  // InitAuthorize starts an OAuth2 authorization_code flow: validates the
+  // client/app and returns what the consent screen needs to render.
+  rpc InitAuthorize(InitAuthorizeRequest) returns (InitAuthorizeResponse);
+
+  // SubmitConsent records the resource owner's decision and, if approved,
+  // issues a short-lived authorization code.
+  rpc SubmitConsent(SubmitConsentRequest) returns (SubmitConsentResponse);
+
+  // ExchangeToken redeems an authorization code for an access/refresh token
+  // pair.
+  rpc ExchangeToken(ExchangeTokenRequest) returns (ExchangeTokenResponse);
+}
+
+// LoginRequest represents the login request
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+  string custom_attr = 3;
+  string device_info = 4;
+  string ip_address = 5;
+}
+
+// LoginResponse represents the login response
+message LoginResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  string token_type = 3;
+  int64 expires_in = 4;
+  UserInfo user_info = 5;
+}
+
+// RegisterRequest represents the registration request
+message RegisterRequest {
+  string username = 1;
+  string email = 2;
+  string password = 3;
+  string picture_profile = 4;
+  string device_info = 5;
+  string ip_address = 6;
+  map<string, string> custom_attributes = 7;
+}
+
+// RegisterResponse represents the registration response
+message RegisterResponse {
+  string user_id = 1;
+  string username = 2;
+  string email = 3;
+  string picture_profile = 4;
+  string created_at = 5;
+}
+
+// RefreshTokenRequest represents the refresh token request
+message RefreshTokenRequest {
+  string refresh_token = 1;
+}
+
+// RefreshTokenResponse represents the refresh token response
+message RefreshTokenResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  string token_type = 3;
+  int64 expires_in = 4;
+}
+
+// VerifyTokenRequest represents the verify token request
+message VerifyTokenRequest {
+  string access_token = 1;
+}
+
+// VerifyTokenResponse represents the verify token response
+message VerifyTokenResponse {
+  bool is_valid = 1;
+  UserInfo user_info = 2;
+  int64 expires_at = 3;
+}
+
+// LogoutRequest represents the logout request
+message LogoutRequest {
+  string user_id = 1;
+  string session_id = 2;
+}
+
+// LogoutResponse represents the logout response
+message LogoutResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// UserInfo represents basic user information
+message UserInfo {
+  string user_id = 1;
+  string username = 2;
+  string email = 3;
+  string picture_profile = 4;
+}
+
+// InitAuthorizeRequest represents the start of an OAuth2 authorize request
+message InitAuthorizeRequest {
+  string client_id = 1;
+  string redirect_uri = 2;
+  string scope = 3;
+  string state = 4;
+}
+
+// InitAuthorizeResponse carries what the consent screen needs to render
+message InitAuthorizeResponse {
+  string app_name = 1;
+  string logo_url = 2;
+  repeated string scope = 3;
+  string client_id = 4;
+  string redirect_uri = 5;
+  string state = 6;
+}
+
+// SubmitConsentRequest represents the resource owner's consent decision
+message SubmitConsentRequest {
+  string user_id = 1;
+  string client_id = 2;
+  string redirect_uri = 3;
+  string scope = 4;
+  string state = 5;
+  bool approved = 6;
+}
+
+// SubmitConsentResponse carries the redirect target and, if approved, a code
+message SubmitConsentResponse {
+  string redirect_uri = 1;
+  string code = 2;
+  string state = 3;
+  bool approved = 4;
+}
+
+// ExchangeTokenRequest represents an authorization_code grant token exchange
+message ExchangeTokenRequest {
+  string code = 1;
+  string client_id = 2;
+  string client_secret = 3;
+  string redirect_uri = 4;
+}
+
+// ExchangeTokenResponse represents the issued token pair
+message ExchangeTokenResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  string token_type = 3;
+  int64 expires_in = 4;
+  UserInfo user_info = 5;
+}
