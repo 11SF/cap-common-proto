@@ -21,6 +21,310 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type InitAuthorizeRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ClientId      string                 `protobuf:"bytes,1,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
+	RedirectUri   string                 `protobuf:"bytes,2,opt,name=redirect_uri,json=redirectUri,proto3" json:"redirect_uri,omitempty"`
+	Scope         string                 `protobuf:"bytes,3,opt,name=scope,proto3" json:"scope,omitempty"`
+	State         string                 `protobuf:"bytes,4,opt,name=state,proto3" json:"state,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InitAuthorizeRequest) Reset() {
+	*x = InitAuthorizeRequest{}
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InitAuthorizeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InitAuthorizeRequest) ProtoMessage() {}
+
+func (x *InitAuthorizeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InitAuthorizeRequest.ProtoReflect.Descriptor instead.
+func (*InitAuthorizeRequest) Descriptor() ([]byte, []int) {
+	return file_v1_partner_partner_gateway_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *InitAuthorizeRequest) GetClientId() string {
+	if x != nil {
+		return x.ClientId
+	}
+	return ""
+}
+
+func (x *InitAuthorizeRequest) GetRedirectUri() string {
+	if x != nil {
+		return x.RedirectUri
+	}
+	return ""
+}
+
+func (x *InitAuthorizeRequest) GetScope() string {
+	if x != nil {
+		return x.Scope
+	}
+	return ""
+}
+
+func (x *InitAuthorizeRequest) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+type InitAuthorizeResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AppName       string                 `protobuf:"bytes,1,opt,name=app_name,json=appName,proto3" json:"app_name,omitempty"`
+	LogoUrl       string                 `protobuf:"bytes,2,opt,name=logo_url,json=logoUrl,proto3" json:"logo_url,omitempty"`
+	Scope         []string               `protobuf:"bytes,3,rep,name=scope,proto3" json:"scope,omitempty"`
+	ClientId      string                 `protobuf:"bytes,4,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
+	RedirectUri   string                 `protobuf:"bytes,5,opt,name=redirect_uri,json=redirectUri,proto3" json:"redirect_uri,omitempty"`
+	State         string                 `protobuf:"bytes,6,opt,name=state,proto3" json:"state,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InitAuthorizeResponse) Reset() {
+	*x = InitAuthorizeResponse{}
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InitAuthorizeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InitAuthorizeResponse) ProtoMessage() {}
+
+func (x *InitAuthorizeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InitAuthorizeResponse.ProtoReflect.Descriptor instead.
+func (*InitAuthorizeResponse) Descriptor() ([]byte, []int) {
+	return file_v1_partner_partner_gateway_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *InitAuthorizeResponse) GetAppName() string {
+	if x != nil {
+		return x.AppName
+	}
+	return ""
+}
+
+func (x *InitAuthorizeResponse) GetLogoUrl() string {
+	if x != nil {
+		return x.LogoUrl
+	}
+	return ""
+}
+
+func (x *InitAuthorizeResponse) GetScope() []string {
+	if x != nil {
+		return x.Scope
+	}
+	return nil
+}
+
+func (x *InitAuthorizeResponse) GetClientId() string {
+	if x != nil {
+		return x.ClientId
+	}
+	return ""
+}
+
+func (x *InitAuthorizeResponse) GetRedirectUri() string {
+	if x != nil {
+		return x.RedirectUri
+	}
+	return ""
+}
+
+func (x *InitAuthorizeResponse) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+type SubmitConsentRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	ClientId      string                 `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
+	RedirectUri   string                 `protobuf:"bytes,3,opt,name=redirect_uri,json=redirectUri,proto3" json:"redirect_uri,omitempty"`
+	Scope         string                 `protobuf:"bytes,4,opt,name=scope,proto3" json:"scope,omitempty"`
+	State         string                 `protobuf:"bytes,5,opt,name=state,proto3" json:"state,omitempty"`
+	Approved      bool                   `protobuf:"varint,6,opt,name=approved,proto3" json:"approved,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SubmitConsentRequest) Reset() {
+	*x = SubmitConsentRequest{}
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubmitConsentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubmitConsentRequest) ProtoMessage() {}
+
+func (x *SubmitConsentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubmitConsentRequest.ProtoReflect.Descriptor instead.
+func (*SubmitConsentRequest) Descriptor() ([]byte, []int) {
+	return file_v1_partner_partner_gateway_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *SubmitConsentRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *SubmitConsentRequest) GetClientId() string {
+	if x != nil {
+		return x.ClientId
+	}
+	return ""
+}
+
+func (x *SubmitConsentRequest) GetRedirectUri() string {
+	if x != nil {
+		return x.RedirectUri
+	}
+	return ""
+}
+
+func (x *SubmitConsentRequest) GetScope() string {
+	if x != nil {
+		return x.Scope
+	}
+	return ""
+}
+
+func (x *SubmitConsentRequest) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+func (x *SubmitConsentRequest) GetApproved() bool {
+	if x != nil {
+		return x.Approved
+	}
+	return false
+}
+
+type SubmitConsentResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	RedirectUri   string                 `protobuf:"bytes,1,opt,name=redirect_uri,json=redirectUri,proto3" json:"redirect_uri,omitempty"`
+	Code          string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
+	State         string                 `protobuf:"bytes,3,opt,name=state,proto3" json:"state,omitempty"`
+	Approved      bool                   `protobuf:"varint,4,opt,name=approved,proto3" json:"approved,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SubmitConsentResponse) Reset() {
+	*x = SubmitConsentResponse{}
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubmitConsentResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubmitConsentResponse) ProtoMessage() {}
+
+func (x *SubmitConsentResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubmitConsentResponse.ProtoReflect.Descriptor instead.
+func (*SubmitConsentResponse) Descriptor() ([]byte, []int) {
+	return file_v1_partner_partner_gateway_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *SubmitConsentResponse) GetRedirectUri() string {
+	if x != nil {
+		return x.RedirectUri
+	}
+	return ""
+}
+
+func (x *SubmitConsentResponse) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *SubmitConsentResponse) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+func (x *SubmitConsentResponse) GetApproved() bool {
+	if x != nil {
+		return x.Approved
+	}
+	return false
+}
+
 type ExchangeTokenRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
@@ -33,7 +337,7 @@ type ExchangeTokenRequest struct {
 
 func (x *ExchangeTokenRequest) Reset() {
 	*x = ExchangeTokenRequest{}
-	mi := &file_v1_partner_partner_gateway_proto_msgTypes[0]
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -45,7 +349,7 @@ func (x *ExchangeTokenRequest) String() string {
 func (*ExchangeTokenRequest) ProtoMessage() {}
 
 func (x *ExchangeTokenRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_partner_partner_gateway_proto_msgTypes[0]
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58,7 +362,7 @@ func (x *ExchangeTokenRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExchangeTokenRequest.ProtoReflect.Descriptor instead.
 func (*ExchangeTokenRequest) Descriptor() ([]byte, []int) {
-	return file_v1_partner_partner_gateway_proto_rawDescGZIP(), []int{0}
+	return file_v1_partner_partner_gateway_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ExchangeTokenRequest) GetCode() string {
@@ -102,7 +406,7 @@ type ExchangeTokenResponse struct {
 
 func (x *ExchangeTokenResponse) Reset() {
 	*x = ExchangeTokenResponse{}
-	mi := &file_v1_partner_partner_gateway_proto_msgTypes[1]
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -114,7 +418,7 @@ func (x *ExchangeTokenResponse) String() string {
 func (*ExchangeTokenResponse) ProtoMessage() {}
 
 func (x *ExchangeTokenResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_partner_partner_gateway_proto_msgTypes[1]
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -127,7 +431,7 @@ func (x *ExchangeTokenResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExchangeTokenResponse.ProtoReflect.Descriptor instead.
 func (*ExchangeTokenResponse) Descriptor() ([]byte, []int) {
-	return file_v1_partner_partner_gateway_proto_rawDescGZIP(), []int{1}
+	return file_v1_partner_partner_gateway_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ExchangeTokenResponse) GetAccessToken() string {
@@ -177,7 +481,7 @@ type UserInfo struct {
 
 func (x *UserInfo) Reset() {
 	*x = UserInfo{}
-	mi := &file_v1_partner_partner_gateway_proto_msgTypes[2]
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -189,7 +493,7 @@ func (x *UserInfo) String() string {
 func (*UserInfo) ProtoMessage() {}
 
 func (x *UserInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_partner_partner_gateway_proto_msgTypes[2]
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -202,7 +506,7 @@ func (x *UserInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserInfo.ProtoReflect.Descriptor instead.
 func (*UserInfo) Descriptor() ([]byte, []int) {
-	return file_v1_partner_partner_gateway_proto_rawDescGZIP(), []int{2}
+	return file_v1_partner_partner_gateway_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *UserInfo) GetUserId() string {
@@ -238,7 +542,31 @@ var File_v1_partner_partner_gateway_proto protoreflect.FileDescriptor
 const file_v1_partner_partner_gateway_proto_rawDesc = "" +
 	"\n" +
 	" v1/partner/partner_gateway.proto\x12\n" +
-	"partner.v1\"\x8f\x01\n" +
+	"partner.v1\"\x82\x01\n" +
+	"\x14InitAuthorizeRequest\x12\x1b\n" +
+	"\tclient_id\x18\x01 \x01(\tR\bclientId\x12!\n" +
+	"\fredirect_uri\x18\x02 \x01(\tR\vredirectUri\x12\x14\n" +
+	"\x05scope\x18\x03 \x01(\tR\x05scope\x12\x14\n" +
+	"\x05state\x18\x04 \x01(\tR\x05state\"\xb9\x01\n" +
+	"\x15InitAuthorizeResponse\x12\x19\n" +
+	"\bapp_name\x18\x01 \x01(\tR\aappName\x12\x19\n" +
+	"\blogo_url\x18\x02 \x01(\tR\alogoUrl\x12\x14\n" +
+	"\x05scope\x18\x03 \x03(\tR\x05scope\x12\x1b\n" +
+	"\tclient_id\x18\x04 \x01(\tR\bclientId\x12!\n" +
+	"\fredirect_uri\x18\x05 \x01(\tR\vredirectUri\x12\x14\n" +
+	"\x05state\x18\x06 \x01(\tR\x05state\"\xb7\x01\n" +
+	"\x14SubmitConsentRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x1b\n" +
+	"\tclient_id\x18\x02 \x01(\tR\bclientId\x12!\n" +
+	"\fredirect_uri\x18\x03 \x01(\tR\vredirectUri\x12\x14\n" +
+	"\x05scope\x18\x04 \x01(\tR\x05scope\x12\x14\n" +
+	"\x05state\x18\x05 \x01(\tR\x05state\x12\x1a\n" +
+	"\bapproved\x18\x06 \x01(\bR\bapproved\"\x80\x01\n" +
+	"\x15SubmitConsentResponse\x12!\n" +
+	"\fredirect_uri\x18\x01 \x01(\tR\vredirectUri\x12\x12\n" +
+	"\x04code\x18\x02 \x01(\tR\x04code\x12\x14\n" +
+	"\x05state\x18\x03 \x01(\tR\x05state\x12\x1a\n" +
+	"\bapproved\x18\x04 \x01(\bR\bapproved\"\x8f\x01\n" +
 	"\x14ExchangeTokenRequest\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\x12\x1b\n" +
 	"\tclient_id\x18\x02 \x01(\tR\bclientId\x12#\n" +
@@ -256,8 +584,10 @@ const file_v1_partner_partner_gateway_proto_rawDesc = "" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x14\n" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x12'\n" +
-	"\x0fpicture_profile\x18\x04 \x01(\tR\x0epictureProfile2m\n" +
+	"\x0fpicture_profile\x18\x04 \x01(\tR\x0epictureProfile2\x99\x02\n" +
 	"\x15PartnerGatewayService\x12T\n" +
+	"\rInitAuthorize\x12 .partner.v1.InitAuthorizeRequest\x1a!.partner.v1.InitAuthorizeResponse\x12T\n" +
+	"\rSubmitConsent\x12 .partner.v1.SubmitConsentRequest\x1a!.partner.v1.SubmitConsentResponse\x12T\n" +
 	"\rExchangeToken\x12 .partner.v1.ExchangeTokenRequest\x1a!.partner.v1.ExchangeTokenResponseB7Z5github.com/11SF/cap-common-proto/v1/partner;partnerv1b\x06proto3"
 
 var (
@@ -272,18 +602,26 @@ func file_v1_partner_partner_gateway_proto_rawDescGZIP() []byte {
 	return file_v1_partner_partner_gateway_proto_rawDescData
 }
 
-var file_v1_partner_partner_gateway_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_v1_partner_partner_gateway_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_v1_partner_partner_gateway_proto_goTypes = []any{
-	(*ExchangeTokenRequest)(nil),  // 0: partner.v1.ExchangeTokenRequest
-	(*ExchangeTokenResponse)(nil), // 1: partner.v1.ExchangeTokenResponse
-	(*UserInfo)(nil),              // 2: partner.v1.UserInfo
+	(*InitAuthorizeRequest)(nil),  // 0: partner.v1.InitAuthorizeRequest
+	(*InitAuthorizeResponse)(nil), // 1: partner.v1.InitAuthorizeResponse
+	(*SubmitConsentRequest)(nil),  // 2: partner.v1.SubmitConsentRequest
+	(*SubmitConsentResponse)(nil), // 3: partner.v1.SubmitConsentResponse
+	(*ExchangeTokenRequest)(nil),  // 4: partner.v1.ExchangeTokenRequest
+	(*ExchangeTokenResponse)(nil), // 5: partner.v1.ExchangeTokenResponse
+	(*UserInfo)(nil),              // 6: partner.v1.UserInfo
 }
 var file_v1_partner_partner_gateway_proto_depIdxs = []int32{
-	2, // 0: partner.v1.ExchangeTokenResponse.user_info:type_name -> partner.v1.UserInfo
-	0, // 1: partner.v1.PartnerGatewayService.ExchangeToken:input_type -> partner.v1.ExchangeTokenRequest
-	1, // 2: partner.v1.PartnerGatewayService.ExchangeToken:output_type -> partner.v1.ExchangeTokenResponse
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
+	6, // 0: partner.v1.ExchangeTokenResponse.user_info:type_name -> partner.v1.UserInfo
+	0, // 1: partner.v1.PartnerGatewayService.InitAuthorize:input_type -> partner.v1.InitAuthorizeRequest
+	2, // 2: partner.v1.PartnerGatewayService.SubmitConsent:input_type -> partner.v1.SubmitConsentRequest
+	4, // 3: partner.v1.PartnerGatewayService.ExchangeToken:input_type -> partner.v1.ExchangeTokenRequest
+	1, // 4: partner.v1.PartnerGatewayService.InitAuthorize:output_type -> partner.v1.InitAuthorizeResponse
+	3, // 5: partner.v1.PartnerGatewayService.SubmitConsent:output_type -> partner.v1.SubmitConsentResponse
+	5, // 6: partner.v1.PartnerGatewayService.ExchangeToken:output_type -> partner.v1.ExchangeTokenResponse
+	4, // [4:7] is the sub-list for method output_type
+	1, // [1:4] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -300,7 +638,7 @@ func file_v1_partner_partner_gateway_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_partner_partner_gateway_proto_rawDesc), len(file_v1_partner_partner_gateway_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
