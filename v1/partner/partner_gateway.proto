@@ -5,24 +5,11 @@ package partner.v1;
 option go_package = "github.com/11SF/cap-common-proto/v1/partner;partnerv1";
 
 // PartnerGatewayService is grpc-only, deliberately: nothing reaches it
-// directly from a browser. The end user must always log in through our own
-// web UI (hosted by orch-auth-processor); a partner never gets a login
-// surface of their own. orch-auth-processor calls InitAuthorize/
-// SubmitConsent over grpc on the user's behalf as part of that web flow. A
-// partner's backend calls ExchangeToken, GetProfile, and RevokeToken over
-// grpc directly - those are the only three operations a partner can perform,
-// and only backend-to-backend, never from a browser.
+// directly from a browser, and no other orchestrator calls it either - orch
+// services call core/adaptor directly, never each other, same rule as core
+// services never calling another core directly. A partner's backend calls
+// these three RPCs directly; that's the only way in.
 service PartnerGatewayService {
-  // InitAuthorize starts an OAuth2 authorization_code flow: validates the
-  // client/app and returns what the consent screen needs to render. Called
-  // by orch-auth-processor, not the partner directly.
-  rpc InitAuthorize(InitAuthorizeRequest) returns (InitAuthorizeResponse);
-
-  // SubmitConsent records the resource owner's decision and, if approved,
-  // issues a short-lived authorization code. Called by orch-auth-processor,
-  // not the partner directly.
-  rpc SubmitConsent(SubmitConsentRequest) returns (SubmitConsentResponse);
-
   // ExchangeToken redeems an authorization code for an access/refresh token
   // pair. Callable only by the partner's backend.
   rpc ExchangeToken(ExchangeTokenRequest) returns (ExchangeTokenResponse);
@@ -34,38 +21,6 @@ service PartnerGatewayService {
   // RevokeToken invalidates an access token's underlying session. Callable
   // only by the partner's backend.
   rpc RevokeToken(RevokeTokenRequest) returns (RevokeTokenResponse);
-}
-
-message InitAuthorizeRequest {
-  string client_id = 1;
-  string redirect_uri = 2;
-  string scope = 3;
-  string state = 4;
-}
-
-message InitAuthorizeResponse {
-  string app_name = 1;
-  string logo_url = 2;
-  repeated string scope = 3;
-  string client_id = 4;
-  string redirect_uri = 5;
-  string state = 6;
-}
-
-message SubmitConsentRequest {
-  string user_id = 1;
-  string client_id = 2;
-  string redirect_uri = 3;
-  string scope = 4;
-  string state = 5;
-  bool approved = 6;
-}
-
-message SubmitConsentResponse {
-  string redirect_uri = 1;
-  string code = 2;
-  string state = 3;
-  bool approved = 4;
 }
 
 message ExchangeTokenRequest {

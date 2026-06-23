@@ -19,8 +19,6 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	PartnerGatewayService_InitAuthorize_FullMethodName = "/partner.v1.PartnerGatewayService/InitAuthorize"
-	PartnerGatewayService_SubmitConsent_FullMethodName = "/partner.v1.PartnerGatewayService/SubmitConsent"
 	PartnerGatewayService_ExchangeToken_FullMethodName = "/partner.v1.PartnerGatewayService/ExchangeToken"
 	PartnerGatewayService_GetProfile_FullMethodName    = "/partner.v1.PartnerGatewayService/GetProfile"
 	PartnerGatewayService_RevokeToken_FullMethodName   = "/partner.v1.PartnerGatewayService/RevokeToken"
@@ -31,22 +29,11 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
 // PartnerGatewayService is grpc-only, deliberately: nothing reaches it
-// directly from a browser. The end user must always log in through our own
-// web UI (hosted by orch-auth-processor); a partner never gets a login
-// surface of their own. orch-auth-processor calls InitAuthorize/
-// SubmitConsent over grpc on the user's behalf as part of that web flow. A
-// partner's backend calls ExchangeToken, GetProfile, and RevokeToken over
-// grpc directly - those are the only three operations a partner can perform,
-// and only backend-to-backend, never from a browser.
+// directly from a browser, and no other orchestrator calls it either - orch
+// services call core/adaptor directly, never each other, same rule as core
+// services never calling another core directly. A partner's backend calls
+// these three RPCs directly; that's the only way in.
 type PartnerGatewayServiceClient interface {
-	// InitAuthorize starts an OAuth2 authorization_code flow: validates the
-	// client/app and returns what the consent screen needs to render. Called
-	// by orch-auth-processor, not the partner directly.
-	InitAuthorize(ctx context.Context, in *InitAuthorizeRequest, opts ...grpc.CallOption) (*InitAuthorizeResponse, error)
-	// SubmitConsent records the resource owner's decision and, if approved,
-	// issues a short-lived authorization code. Called by orch-auth-processor,
-	// not the partner directly.
-	SubmitConsent(ctx context.Context, in *SubmitConsentRequest, opts ...grpc.CallOption) (*SubmitConsentResponse, error)
 	// ExchangeToken redeems an authorization code for an access/refresh token
 	// pair. Callable only by the partner's backend.
 	ExchangeToken(ctx context.Context, in *ExchangeTokenRequest, opts ...grpc.CallOption) (*ExchangeTokenResponse, error)
@@ -64,26 +51,6 @@ type partnerGatewayServiceClient struct {
 
 func NewPartnerGatewayServiceClient(cc grpc.ClientConnInterface) PartnerGatewayServiceClient {
 	return &partnerGatewayServiceClient{cc}
-}
-
-func (c *partnerGatewayServiceClient) InitAuthorize(ctx context.Context, in *InitAuthorizeRequest, opts ...grpc.CallOption) (*InitAuthorizeResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(InitAuthorizeResponse)
-	err := c.cc.Invoke(ctx, PartnerGatewayService_InitAuthorize_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *partnerGatewayServiceClient) SubmitConsent(ctx context.Context, in *SubmitConsentRequest, opts ...grpc.CallOption) (*SubmitConsentResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SubmitConsentResponse)
-	err := c.cc.Invoke(ctx, PartnerGatewayService_SubmitConsent_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *partnerGatewayServiceClient) ExchangeToken(ctx context.Context, in *ExchangeTokenRequest, opts ...grpc.CallOption) (*ExchangeTokenResponse, error) {
@@ -121,22 +88,11 @@ func (c *partnerGatewayServiceClient) RevokeToken(ctx context.Context, in *Revok
 // for forward compatibility.
 //
 // PartnerGatewayService is grpc-only, deliberately: nothing reaches it
-// directly from a browser. The end user must always log in through our own
-// web UI (hosted by orch-auth-processor); a partner never gets a login
-// surface of their own. orch-auth-processor calls InitAuthorize/
-// SubmitConsent over grpc on the user's behalf as part of that web flow. A
-// partner's backend calls ExchangeToken, GetProfile, and RevokeToken over
-// grpc directly - those are the only three operations a partner can perform,
-// and only backend-to-backend, never from a browser.
+// directly from a browser, and no other orchestrator calls it either - orch
+// services call core/adaptor directly, never each other, same rule as core
+// services never calling another core directly. A partner's backend calls
+// these three RPCs directly; that's the only way in.
 type PartnerGatewayServiceServer interface {
-	// InitAuthorize starts an OAuth2 authorization_code flow: validates the
-	// client/app and returns what the consent screen needs to render. Called
-	// by orch-auth-processor, not the partner directly.
-	InitAuthorize(context.Context, *InitAuthorizeRequest) (*InitAuthorizeResponse, error)
-	// SubmitConsent records the resource owner's decision and, if approved,
-	// issues a short-lived authorization code. Called by orch-auth-processor,
-	// not the partner directly.
-	SubmitConsent(context.Context, *SubmitConsentRequest) (*SubmitConsentResponse, error)
 	// ExchangeToken redeems an authorization code for an access/refresh token
 	// pair. Callable only by the partner's backend.
 	ExchangeToken(context.Context, *ExchangeTokenRequest) (*ExchangeTokenResponse, error)
@@ -156,12 +112,6 @@ type PartnerGatewayServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedPartnerGatewayServiceServer struct{}
 
-func (UnimplementedPartnerGatewayServiceServer) InitAuthorize(context.Context, *InitAuthorizeRequest) (*InitAuthorizeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method InitAuthorize not implemented")
-}
-func (UnimplementedPartnerGatewayServiceServer) SubmitConsent(context.Context, *SubmitConsentRequest) (*SubmitConsentResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SubmitConsent not implemented")
-}
 func (UnimplementedPartnerGatewayServiceServer) ExchangeToken(context.Context, *ExchangeTokenRequest) (*ExchangeTokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ExchangeToken not implemented")
 }
@@ -190,42 +140,6 @@ func RegisterPartnerGatewayServiceServer(s grpc.ServiceRegistrar, srv PartnerGat
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&PartnerGatewayService_ServiceDesc, srv)
-}
-
-func _PartnerGatewayService_InitAuthorize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(InitAuthorizeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PartnerGatewayServiceServer).InitAuthorize(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: PartnerGatewayService_InitAuthorize_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PartnerGatewayServiceServer).InitAuthorize(ctx, req.(*InitAuthorizeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PartnerGatewayService_SubmitConsent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SubmitConsentRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PartnerGatewayServiceServer).SubmitConsent(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: PartnerGatewayService_SubmitConsent_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PartnerGatewayServiceServer).SubmitConsent(ctx, req.(*SubmitConsentRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _PartnerGatewayService_ExchangeToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -289,14 +203,6 @@ var PartnerGatewayService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "partner.v1.PartnerGatewayService",
 	HandlerType: (*PartnerGatewayServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "InitAuthorize",
-			Handler:    _PartnerGatewayService_InitAuthorize_Handler,
-		},
-		{
-			MethodName: "SubmitConsent",
-			Handler:    _PartnerGatewayService_SubmitConsent_Handler,
-		},
 		{
 			MethodName: "ExchangeToken",
 			Handler:    _PartnerGatewayService_ExchangeToken_Handler,
