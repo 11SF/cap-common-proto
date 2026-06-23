@@ -537,6 +537,190 @@ func (x *UserInfo) GetPictureProfile() string {
 	return ""
 }
 
+type GetProfileRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AccessToken   string                 `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetProfileRequest) Reset() {
+	*x = GetProfileRequest{}
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetProfileRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetProfileRequest) ProtoMessage() {}
+
+func (x *GetProfileRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetProfileRequest.ProtoReflect.Descriptor instead.
+func (*GetProfileRequest) Descriptor() ([]byte, []int) {
+	return file_v1_partner_partner_gateway_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *GetProfileRequest) GetAccessToken() string {
+	if x != nil {
+		return x.AccessToken
+	}
+	return ""
+}
+
+type GetProfileResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserInfo      *UserInfo              `protobuf:"bytes,1,opt,name=user_info,json=userInfo,proto3" json:"user_info,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetProfileResponse) Reset() {
+	*x = GetProfileResponse{}
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetProfileResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetProfileResponse) ProtoMessage() {}
+
+func (x *GetProfileResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetProfileResponse.ProtoReflect.Descriptor instead.
+func (*GetProfileResponse) Descriptor() ([]byte, []int) {
+	return file_v1_partner_partner_gateway_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *GetProfileResponse) GetUserInfo() *UserInfo {
+	if x != nil {
+		return x.UserInfo
+	}
+	return nil
+}
+
+type RevokeTokenRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AccessToken   string                 `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RevokeTokenRequest) Reset() {
+	*x = RevokeTokenRequest{}
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RevokeTokenRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RevokeTokenRequest) ProtoMessage() {}
+
+func (x *RevokeTokenRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RevokeTokenRequest.ProtoReflect.Descriptor instead.
+func (*RevokeTokenRequest) Descriptor() ([]byte, []int) {
+	return file_v1_partner_partner_gateway_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *RevokeTokenRequest) GetAccessToken() string {
+	if x != nil {
+		return x.AccessToken
+	}
+	return ""
+}
+
+type RevokeTokenResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RevokeTokenResponse) Reset() {
+	*x = RevokeTokenResponse{}
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RevokeTokenResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RevokeTokenResponse) ProtoMessage() {}
+
+func (x *RevokeTokenResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_partner_partner_gateway_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RevokeTokenResponse.ProtoReflect.Descriptor instead.
+func (*RevokeTokenResponse) Descriptor() ([]byte, []int) {
+	return file_v1_partner_partner_gateway_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *RevokeTokenResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *RevokeTokenResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_v1_partner_partner_gateway_proto protoreflect.FileDescriptor
 
 const file_v1_partner_partner_gateway_proto_rawDesc = "" +
@@ -584,11 +768,23 @@ const file_v1_partner_partner_gateway_proto_rawDesc = "" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x14\n" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x12'\n" +
-	"\x0fpicture_profile\x18\x04 \x01(\tR\x0epictureProfile2\x99\x02\n" +
+	"\x0fpicture_profile\x18\x04 \x01(\tR\x0epictureProfile\"6\n" +
+	"\x11GetProfileRequest\x12!\n" +
+	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\"G\n" +
+	"\x12GetProfileResponse\x121\n" +
+	"\tuser_info\x18\x01 \x01(\v2\x14.partner.v1.UserInfoR\buserInfo\"7\n" +
+	"\x12RevokeTokenRequest\x12!\n" +
+	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\"I\n" +
+	"\x13RevokeTokenResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage2\xb6\x03\n" +
 	"\x15PartnerGatewayService\x12T\n" +
 	"\rInitAuthorize\x12 .partner.v1.InitAuthorizeRequest\x1a!.partner.v1.InitAuthorizeResponse\x12T\n" +
 	"\rSubmitConsent\x12 .partner.v1.SubmitConsentRequest\x1a!.partner.v1.SubmitConsentResponse\x12T\n" +
-	"\rExchangeToken\x12 .partner.v1.ExchangeTokenRequest\x1a!.partner.v1.ExchangeTokenResponseB7Z5github.com/11SF/cap-common-proto/v1/partner;partnerv1b\x06proto3"
+	"\rExchangeToken\x12 .partner.v1.ExchangeTokenRequest\x1a!.partner.v1.ExchangeTokenResponse\x12K\n" +
+	"\n" +
+	"GetProfile\x12\x1d.partner.v1.GetProfileRequest\x1a\x1e.partner.v1.GetProfileResponse\x12N\n" +
+	"\vRevokeToken\x12\x1e.partner.v1.RevokeTokenRequest\x1a\x1f.partner.v1.RevokeTokenResponseB7Z5github.com/11SF/cap-common-proto/v1/partner;partnerv1b\x06proto3"
 
 var (
 	file_v1_partner_partner_gateway_proto_rawDescOnce sync.Once
@@ -602,7 +798,7 @@ func file_v1_partner_partner_gateway_proto_rawDescGZIP() []byte {
 	return file_v1_partner_partner_gateway_proto_rawDescData
 }
 
-var file_v1_partner_partner_gateway_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_v1_partner_partner_gateway_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_v1_partner_partner_gateway_proto_goTypes = []any{
 	(*InitAuthorizeRequest)(nil),  // 0: partner.v1.InitAuthorizeRequest
 	(*InitAuthorizeResponse)(nil), // 1: partner.v1.InitAuthorizeResponse
@@ -611,20 +807,29 @@ var file_v1_partner_partner_gateway_proto_goTypes = []any{
 	(*ExchangeTokenRequest)(nil),  // 4: partner.v1.ExchangeTokenRequest
 	(*ExchangeTokenResponse)(nil), // 5: partner.v1.ExchangeTokenResponse
 	(*UserInfo)(nil),              // 6: partner.v1.UserInfo
+	(*GetProfileRequest)(nil),     // 7: partner.v1.GetProfileRequest
+	(*GetProfileResponse)(nil),    // 8: partner.v1.GetProfileResponse
+	(*RevokeTokenRequest)(nil),    // 9: partner.v1.RevokeTokenRequest
+	(*RevokeTokenResponse)(nil),   // 10: partner.v1.RevokeTokenResponse
 }
 var file_v1_partner_partner_gateway_proto_depIdxs = []int32{
-	6, // 0: partner.v1.ExchangeTokenResponse.user_info:type_name -> partner.v1.UserInfo
-	0, // 1: partner.v1.PartnerGatewayService.InitAuthorize:input_type -> partner.v1.InitAuthorizeRequest
-	2, // 2: partner.v1.PartnerGatewayService.SubmitConsent:input_type -> partner.v1.SubmitConsentRequest
-	4, // 3: partner.v1.PartnerGatewayService.ExchangeToken:input_type -> partner.v1.ExchangeTokenRequest
-	1, // 4: partner.v1.PartnerGatewayService.InitAuthorize:output_type -> partner.v1.InitAuthorizeResponse
-	3, // 5: partner.v1.PartnerGatewayService.SubmitConsent:output_type -> partner.v1.SubmitConsentResponse
-	5, // 6: partner.v1.PartnerGatewayService.ExchangeToken:output_type -> partner.v1.ExchangeTokenResponse
-	4, // [4:7] is the sub-list for method output_type
-	1, // [1:4] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	6,  // 0: partner.v1.ExchangeTokenResponse.user_info:type_name -> partner.v1.UserInfo
+	6,  // 1: partner.v1.GetProfileResponse.user_info:type_name -> partner.v1.UserInfo
+	0,  // 2: partner.v1.PartnerGatewayService.InitAuthorize:input_type -> partner.v1.InitAuthorizeRequest
+	2,  // 3: partner.v1.PartnerGatewayService.SubmitConsent:input_type -> partner.v1.SubmitConsentRequest
+	4,  // 4: partner.v1.PartnerGatewayService.ExchangeToken:input_type -> partner.v1.ExchangeTokenRequest
+	7,  // 5: partner.v1.PartnerGatewayService.GetProfile:input_type -> partner.v1.GetProfileRequest
+	9,  // 6: partner.v1.PartnerGatewayService.RevokeToken:input_type -> partner.v1.RevokeTokenRequest
+	1,  // 7: partner.v1.PartnerGatewayService.InitAuthorize:output_type -> partner.v1.InitAuthorizeResponse
+	3,  // 8: partner.v1.PartnerGatewayService.SubmitConsent:output_type -> partner.v1.SubmitConsentResponse
+	5,  // 9: partner.v1.PartnerGatewayService.ExchangeToken:output_type -> partner.v1.ExchangeTokenResponse
+	8,  // 10: partner.v1.PartnerGatewayService.GetProfile:output_type -> partner.v1.GetProfileResponse
+	10, // 11: partner.v1.PartnerGatewayService.RevokeToken:output_type -> partner.v1.RevokeTokenResponse
+	7,  // [7:12] is the sub-list for method output_type
+	2,  // [2:7] is the sub-list for method input_type
+	2,  // [2:2] is the sub-list for extension type_name
+	2,  // [2:2] is the sub-list for extension extendee
+	0,  // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_v1_partner_partner_gateway_proto_init() }
@@ -638,7 +843,7 @@ func file_v1_partner_partner_gateway_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_partner_partner_gateway_proto_rawDesc), len(file_v1_partner_partner_gateway_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

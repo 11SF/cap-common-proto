@@ -5,24 +5,35 @@ package partner.v1;
 option go_package = "github.com/11SF/cap-common-proto/v1/partner;partnerv1";
 
 // PartnerGatewayService is grpc-only, deliberately: nothing reaches it
-// directly from a browser. orch-auth-processor (REST, frontend-facing)
-// hosts the actual browser-facing routes for InitAuthorize/SubmitConsent
-// and calls this service over grpc on the user's behalf; a partner's
-// backend calls ExchangeToken over grpc directly. Either way, the only
-// callers of this service are other backends, never a browser - that's
-// the boundary this being grpc-only enforces.
+// directly from a browser. The end user must always log in through our own
+// web UI (hosted by orch-auth-processor); a partner never gets a login
+// surface of their own. orch-auth-processor calls InitAuthorize/
+// SubmitConsent over grpc on the user's behalf as part of that web flow. A
+// partner's backend calls ExchangeToken, GetProfile, and RevokeToken over
+// grpc directly - those are the only three operations a partner can perform,
+// and only backend-to-backend, never from a browser.
 service PartnerGatewayService {
   // InitAuthorize starts an OAuth2 authorization_code flow: validates the
-  // client/app and returns what the consent screen needs to render.
+  // client/app and returns what the consent screen needs to render. Called
+  // by orch-auth-processor, not the partner directly.
   rpc InitAuthorize(InitAuthorizeRequest) returns (InitAuthorizeResponse);
 
   // SubmitConsent records the resource owner's decision and, if approved,
-  // issues a short-lived authorization code.
+  // issues a short-lived authorization code. Called by orch-auth-processor,
+  // not the partner directly.
   rpc SubmitConsent(SubmitConsentRequest) returns (SubmitConsentResponse);
 
   // ExchangeToken redeems an authorization code for an access/refresh token
   // pair. Callable only by the partner's backend.
   rpc ExchangeToken(ExchangeTokenRequest) returns (ExchangeTokenResponse);
+
+  // GetProfile returns the resource owner's profile for a valid access
+  // token. Callable only by the partner's backend.
+  rpc GetProfile(GetProfileRequest) returns (GetProfileResponse);
+
+  // RevokeToken invalidates an access token's underlying session. Callable
+  // only by the partner's backend.
+  rpc RevokeToken(RevokeTokenRequest) returns (RevokeTokenResponse);
 }
 
 message InitAuthorizeRequest {
@@ -77,4 +88,21 @@ message UserInfo {
   string username = 2;
   string email = 3;
   string picture_profile = 4;
+}
+
+message GetProfileRequest {
+  string access_token = 1;
+}
+
+message GetProfileResponse {
+  UserInfo user_info = 1;
+}
+
+message RevokeTokenRequest {
+  string access_token = 1;
+}
+
+message RevokeTokenResponse {
+  bool success = 1;
+  string message = 2;
 }
