@@ -405,6 +405,126 @@ func (x *ListApplicationsByOwnerResponse) GetApplications() []*GetApplicationRes
 	return nil
 }
 
+type ListApplicationsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`   // 1-based
+	Limit         int32                  `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"` // default 50, max 200
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListApplicationsRequest) Reset() {
+	*x = ListApplicationsRequest{}
+	mi := &file_v1_client_client_management_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListApplicationsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListApplicationsRequest) ProtoMessage() {}
+
+func (x *ListApplicationsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_client_client_management_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListApplicationsRequest.ProtoReflect.Descriptor instead.
+func (*ListApplicationsRequest) Descriptor() ([]byte, []int) {
+	return file_v1_client_client_management_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ListApplicationsRequest) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *ListApplicationsRequest) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+type ListApplicationsResponse struct {
+	state         protoimpl.MessageState    `protogen:"open.v1"`
+	Applications  []*GetApplicationResponse `protobuf:"bytes,1,rep,name=applications,proto3" json:"applications,omitempty"`
+	Total         int32                     `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
+	Page          int32                     `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	Limit         int32                     `protobuf:"varint,4,opt,name=limit,proto3" json:"limit,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListApplicationsResponse) Reset() {
+	*x = ListApplicationsResponse{}
+	mi := &file_v1_client_client_management_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListApplicationsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListApplicationsResponse) ProtoMessage() {}
+
+func (x *ListApplicationsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_client_client_management_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListApplicationsResponse.ProtoReflect.Descriptor instead.
+func (*ListApplicationsResponse) Descriptor() ([]byte, []int) {
+	return file_v1_client_client_management_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ListApplicationsResponse) GetApplications() []*GetApplicationResponse {
+	if x != nil {
+		return x.Applications
+	}
+	return nil
+}
+
+func (x *ListApplicationsResponse) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *ListApplicationsResponse) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *ListApplicationsResponse) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
 type CreateClientRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	OwnerUserId   string                 `protobuf:"bytes,1,opt,name=owner_user_id,json=ownerUserId,proto3" json:"owner_user_id,omitempty"` // used to verify ownership of app_id
@@ -416,7 +536,7 @@ type CreateClientRequest struct {
 
 func (x *CreateClientRequest) Reset() {
 	*x = CreateClientRequest{}
-	mi := &file_v1_client_client_management_proto_msgTypes[6]
+	mi := &file_v1_client_client_management_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -428,7 +548,7 @@ func (x *CreateClientRequest) String() string {
 func (*CreateClientRequest) ProtoMessage() {}
 
 func (x *CreateClientRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_client_client_management_proto_msgTypes[6]
+	mi := &file_v1_client_client_management_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -441,7 +561,7 @@ func (x *CreateClientRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateClientRequest.ProtoReflect.Descriptor instead.
 func (*CreateClientRequest) Descriptor() ([]byte, []int) {
-	return file_v1_client_client_management_proto_rawDescGZIP(), []int{6}
+	return file_v1_client_client_management_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *CreateClientRequest) GetOwnerUserId() string {
@@ -478,7 +598,7 @@ type CreateClientResponse struct {
 
 func (x *CreateClientResponse) Reset() {
 	*x = CreateClientResponse{}
-	mi := &file_v1_client_client_management_proto_msgTypes[7]
+	mi := &file_v1_client_client_management_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -490,7 +610,7 @@ func (x *CreateClientResponse) String() string {
 func (*CreateClientResponse) ProtoMessage() {}
 
 func (x *CreateClientResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_client_client_management_proto_msgTypes[7]
+	mi := &file_v1_client_client_management_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -503,7 +623,7 @@ func (x *CreateClientResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateClientResponse.ProtoReflect.Descriptor instead.
 func (*CreateClientResponse) Descriptor() ([]byte, []int) {
-	return file_v1_client_client_management_proto_rawDescGZIP(), []int{7}
+	return file_v1_client_client_management_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *CreateClientResponse) GetClientId() string {
@@ -552,7 +672,7 @@ type RefreshClientSecretRequest struct {
 
 func (x *RefreshClientSecretRequest) Reset() {
 	*x = RefreshClientSecretRequest{}
-	mi := &file_v1_client_client_management_proto_msgTypes[8]
+	mi := &file_v1_client_client_management_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -564,7 +684,7 @@ func (x *RefreshClientSecretRequest) String() string {
 func (*RefreshClientSecretRequest) ProtoMessage() {}
 
 func (x *RefreshClientSecretRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_client_client_management_proto_msgTypes[8]
+	mi := &file_v1_client_client_management_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -577,7 +697,7 @@ func (x *RefreshClientSecretRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefreshClientSecretRequest.ProtoReflect.Descriptor instead.
 func (*RefreshClientSecretRequest) Descriptor() ([]byte, []int) {
-	return file_v1_client_client_management_proto_rawDescGZIP(), []int{8}
+	return file_v1_client_client_management_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *RefreshClientSecretRequest) GetOwnerUserId() string {
@@ -611,7 +731,7 @@ type RefreshClientSecretResponse struct {
 
 func (x *RefreshClientSecretResponse) Reset() {
 	*x = RefreshClientSecretResponse{}
-	mi := &file_v1_client_client_management_proto_msgTypes[9]
+	mi := &file_v1_client_client_management_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -623,7 +743,7 @@ func (x *RefreshClientSecretResponse) String() string {
 func (*RefreshClientSecretResponse) ProtoMessage() {}
 
 func (x *RefreshClientSecretResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_client_client_management_proto_msgTypes[9]
+	mi := &file_v1_client_client_management_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -636,7 +756,7 @@ func (x *RefreshClientSecretResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefreshClientSecretResponse.ProtoReflect.Descriptor instead.
 func (*RefreshClientSecretResponse) Descriptor() ([]byte, []int) {
-	return file_v1_client_client_management_proto_rawDescGZIP(), []int{9}
+	return file_v1_client_client_management_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *RefreshClientSecretResponse) GetClientId() string {
@@ -662,7 +782,7 @@ type GetClientRequest struct {
 
 func (x *GetClientRequest) Reset() {
 	*x = GetClientRequest{}
-	mi := &file_v1_client_client_management_proto_msgTypes[10]
+	mi := &file_v1_client_client_management_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -674,7 +794,7 @@ func (x *GetClientRequest) String() string {
 func (*GetClientRequest) ProtoMessage() {}
 
 func (x *GetClientRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_client_client_management_proto_msgTypes[10]
+	mi := &file_v1_client_client_management_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -687,7 +807,7 @@ func (x *GetClientRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetClientRequest.ProtoReflect.Descriptor instead.
 func (*GetClientRequest) Descriptor() ([]byte, []int) {
-	return file_v1_client_client_management_proto_rawDescGZIP(), []int{10}
+	return file_v1_client_client_management_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *GetClientRequest) GetClientId() string {
@@ -710,7 +830,7 @@ type GetClientResponse struct {
 
 func (x *GetClientResponse) Reset() {
 	*x = GetClientResponse{}
-	mi := &file_v1_client_client_management_proto_msgTypes[11]
+	mi := &file_v1_client_client_management_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -722,7 +842,7 @@ func (x *GetClientResponse) String() string {
 func (*GetClientResponse) ProtoMessage() {}
 
 func (x *GetClientResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_client_client_management_proto_msgTypes[11]
+	mi := &file_v1_client_client_management_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -735,7 +855,7 @@ func (x *GetClientResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetClientResponse.ProtoReflect.Descriptor instead.
 func (*GetClientResponse) Descriptor() ([]byte, []int) {
-	return file_v1_client_client_management_proto_rawDescGZIP(), []int{11}
+	return file_v1_client_client_management_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *GetClientResponse) GetClientId() string {
@@ -783,7 +903,7 @@ type VerifyClientSecretRequest struct {
 
 func (x *VerifyClientSecretRequest) Reset() {
 	*x = VerifyClientSecretRequest{}
-	mi := &file_v1_client_client_management_proto_msgTypes[12]
+	mi := &file_v1_client_client_management_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -795,7 +915,7 @@ func (x *VerifyClientSecretRequest) String() string {
 func (*VerifyClientSecretRequest) ProtoMessage() {}
 
 func (x *VerifyClientSecretRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_client_client_management_proto_msgTypes[12]
+	mi := &file_v1_client_client_management_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -808,7 +928,7 @@ func (x *VerifyClientSecretRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VerifyClientSecretRequest.ProtoReflect.Descriptor instead.
 func (*VerifyClientSecretRequest) Descriptor() ([]byte, []int) {
-	return file_v1_client_client_management_proto_rawDescGZIP(), []int{12}
+	return file_v1_client_client_management_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *VerifyClientSecretRequest) GetClientId() string {
@@ -835,7 +955,7 @@ type VerifyClientSecretResponse struct {
 
 func (x *VerifyClientSecretResponse) Reset() {
 	*x = VerifyClientSecretResponse{}
-	mi := &file_v1_client_client_management_proto_msgTypes[13]
+	mi := &file_v1_client_client_management_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -847,7 +967,7 @@ func (x *VerifyClientSecretResponse) String() string {
 func (*VerifyClientSecretResponse) ProtoMessage() {}
 
 func (x *VerifyClientSecretResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_client_client_management_proto_msgTypes[13]
+	mi := &file_v1_client_client_management_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -860,7 +980,7 @@ func (x *VerifyClientSecretResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VerifyClientSecretResponse.ProtoReflect.Descriptor instead.
 func (*VerifyClientSecretResponse) Descriptor() ([]byte, []int) {
-	return file_v1_client_client_management_proto_rawDescGZIP(), []int{13}
+	return file_v1_client_client_management_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *VerifyClientSecretResponse) GetIsValid() bool {
@@ -888,7 +1008,7 @@ type ListClientsRequest struct {
 
 func (x *ListClientsRequest) Reset() {
 	*x = ListClientsRequest{}
-	mi := &file_v1_client_client_management_proto_msgTypes[14]
+	mi := &file_v1_client_client_management_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -900,7 +1020,7 @@ func (x *ListClientsRequest) String() string {
 func (*ListClientsRequest) ProtoMessage() {}
 
 func (x *ListClientsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_client_client_management_proto_msgTypes[14]
+	mi := &file_v1_client_client_management_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -913,7 +1033,7 @@ func (x *ListClientsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListClientsRequest.ProtoReflect.Descriptor instead.
 func (*ListClientsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_client_client_management_proto_rawDescGZIP(), []int{14}
+	return file_v1_client_client_management_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ListClientsRequest) GetAppId() string {
@@ -949,7 +1069,7 @@ type ListClientsResponse struct {
 
 func (x *ListClientsResponse) Reset() {
 	*x = ListClientsResponse{}
-	mi := &file_v1_client_client_management_proto_msgTypes[15]
+	mi := &file_v1_client_client_management_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -961,7 +1081,7 @@ func (x *ListClientsResponse) String() string {
 func (*ListClientsResponse) ProtoMessage() {}
 
 func (x *ListClientsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_client_client_management_proto_msgTypes[15]
+	mi := &file_v1_client_client_management_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -974,7 +1094,7 @@ func (x *ListClientsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListClientsResponse.ProtoReflect.Descriptor instead.
 func (*ListClientsResponse) Descriptor() ([]byte, []int) {
-	return file_v1_client_client_management_proto_rawDescGZIP(), []int{15}
+	return file_v1_client_client_management_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *ListClientsResponse) GetClients() []*GetClientResponse {
@@ -1039,7 +1159,15 @@ const file_v1_client_client_management_proto_rawDesc = "" +
 	"\x1eListApplicationsByOwnerRequest\x12\"\n" +
 	"\rowner_user_id\x18\x01 \x01(\tR\vownerUserId\"h\n" +
 	"\x1fListApplicationsByOwnerResponse\x12E\n" +
-	"\fapplications\x18\x01 \x03(\v2!.client.v1.GetApplicationResponseR\fapplications\"q\n" +
+	"\fapplications\x18\x01 \x03(\v2!.client.v1.GetApplicationResponseR\fapplications\"C\n" +
+	"\x17ListApplicationsRequest\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x14\n" +
+	"\x05limit\x18\x02 \x01(\x05R\x05limit\"\xa1\x01\n" +
+	"\x18ListApplicationsResponse\x12E\n" +
+	"\fapplications\x18\x01 \x03(\v2!.client.v1.GetApplicationResponseR\fapplications\x12\x14\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\x12\x12\n" +
+	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x14\n" +
+	"\x05limit\x18\x04 \x01(\x05R\x05limit\"q\n" +
 	"\x13CreateClientRequest\x12\"\n" +
 	"\rowner_user_id\x18\x01 \x01(\tR\vownerUserId\x12\x15\n" +
 	"\x06app_id\x18\x02 \x01(\tR\x05appId\x12\x1f\n" +
@@ -1084,11 +1212,12 @@ const file_v1_client_client_management_proto_rawDesc = "" +
 	"\aclients\x18\x01 \x03(\v2\x1c.client.v1.GetClientResponseR\aclients\x12\x14\n" +
 	"\x05total\x18\x02 \x01(\x05R\x05total\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x14\n" +
-	"\x05limit\x18\x04 \x01(\x05R\x05limit2\xc3\x02\n" +
+	"\x05limit\x18\x04 \x01(\x05R\x05limit2\xa0\x03\n" +
 	"\x12ApplicationService\x12d\n" +
 	"\x13RegisterApplication\x12%.client.v1.RegisterApplicationRequest\x1a&.client.v1.RegisterApplicationResponse\x12U\n" +
 	"\x0eGetApplication\x12 .client.v1.GetApplicationRequest\x1a!.client.v1.GetApplicationResponse\x12p\n" +
-	"\x17ListApplicationsByOwner\x12).client.v1.ListApplicationsByOwnerRequest\x1a*.client.v1.ListApplicationsByOwnerResponse2\xbf\x03\n" +
+	"\x17ListApplicationsByOwner\x12).client.v1.ListApplicationsByOwnerRequest\x1a*.client.v1.ListApplicationsByOwnerResponse\x12[\n" +
+	"\x10ListApplications\x12\".client.v1.ListApplicationsRequest\x1a#.client.v1.ListApplicationsResponse2\xbf\x03\n" +
 	"\rClientService\x12O\n" +
 	"\fCreateClient\x12\x1e.client.v1.CreateClientRequest\x1a\x1f.client.v1.CreateClientResponse\x12d\n" +
 	"\x13RefreshClientSecret\x12%.client.v1.RefreshClientSecretRequest\x1a&.client.v1.RefreshClientSecretResponse\x12F\n" +
@@ -1108,7 +1237,7 @@ func file_v1_client_client_management_proto_rawDescGZIP() []byte {
 	return file_v1_client_client_management_proto_rawDescData
 }
 
-var file_v1_client_client_management_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_v1_client_client_management_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_v1_client_client_management_proto_goTypes = []any{
 	(*RegisterApplicationRequest)(nil),      // 0: client.v1.RegisterApplicationRequest
 	(*RegisterApplicationResponse)(nil),     // 1: client.v1.RegisterApplicationResponse
@@ -1116,41 +1245,46 @@ var file_v1_client_client_management_proto_goTypes = []any{
 	(*GetApplicationResponse)(nil),          // 3: client.v1.GetApplicationResponse
 	(*ListApplicationsByOwnerRequest)(nil),  // 4: client.v1.ListApplicationsByOwnerRequest
 	(*ListApplicationsByOwnerResponse)(nil), // 5: client.v1.ListApplicationsByOwnerResponse
-	(*CreateClientRequest)(nil),             // 6: client.v1.CreateClientRequest
-	(*CreateClientResponse)(nil),            // 7: client.v1.CreateClientResponse
-	(*RefreshClientSecretRequest)(nil),      // 8: client.v1.RefreshClientSecretRequest
-	(*RefreshClientSecretResponse)(nil),     // 9: client.v1.RefreshClientSecretResponse
-	(*GetClientRequest)(nil),                // 10: client.v1.GetClientRequest
-	(*GetClientResponse)(nil),               // 11: client.v1.GetClientResponse
-	(*VerifyClientSecretRequest)(nil),       // 12: client.v1.VerifyClientSecretRequest
-	(*VerifyClientSecretResponse)(nil),      // 13: client.v1.VerifyClientSecretResponse
-	(*ListClientsRequest)(nil),              // 14: client.v1.ListClientsRequest
-	(*ListClientsResponse)(nil),             // 15: client.v1.ListClientsResponse
+	(*ListApplicationsRequest)(nil),         // 6: client.v1.ListApplicationsRequest
+	(*ListApplicationsResponse)(nil),        // 7: client.v1.ListApplicationsResponse
+	(*CreateClientRequest)(nil),             // 8: client.v1.CreateClientRequest
+	(*CreateClientResponse)(nil),            // 9: client.v1.CreateClientResponse
+	(*RefreshClientSecretRequest)(nil),      // 10: client.v1.RefreshClientSecretRequest
+	(*RefreshClientSecretResponse)(nil),     // 11: client.v1.RefreshClientSecretResponse
+	(*GetClientRequest)(nil),                // 12: client.v1.GetClientRequest
+	(*GetClientResponse)(nil),               // 13: client.v1.GetClientResponse
+	(*VerifyClientSecretRequest)(nil),       // 14: client.v1.VerifyClientSecretRequest
+	(*VerifyClientSecretResponse)(nil),      // 15: client.v1.VerifyClientSecretResponse
+	(*ListClientsRequest)(nil),              // 16: client.v1.ListClientsRequest
+	(*ListClientsResponse)(nil),             // 17: client.v1.ListClientsResponse
 }
 var file_v1_client_client_management_proto_depIdxs = []int32{
 	3,  // 0: client.v1.ListApplicationsByOwnerResponse.applications:type_name -> client.v1.GetApplicationResponse
-	11, // 1: client.v1.ListClientsResponse.clients:type_name -> client.v1.GetClientResponse
-	0,  // 2: client.v1.ApplicationService.RegisterApplication:input_type -> client.v1.RegisterApplicationRequest
-	2,  // 3: client.v1.ApplicationService.GetApplication:input_type -> client.v1.GetApplicationRequest
-	4,  // 4: client.v1.ApplicationService.ListApplicationsByOwner:input_type -> client.v1.ListApplicationsByOwnerRequest
-	6,  // 5: client.v1.ClientService.CreateClient:input_type -> client.v1.CreateClientRequest
-	8,  // 6: client.v1.ClientService.RefreshClientSecret:input_type -> client.v1.RefreshClientSecretRequest
-	10, // 7: client.v1.ClientService.GetClient:input_type -> client.v1.GetClientRequest
-	12, // 8: client.v1.ClientService.VerifyClientSecret:input_type -> client.v1.VerifyClientSecretRequest
-	14, // 9: client.v1.ClientService.ListClients:input_type -> client.v1.ListClientsRequest
-	1,  // 10: client.v1.ApplicationService.RegisterApplication:output_type -> client.v1.RegisterApplicationResponse
-	3,  // 11: client.v1.ApplicationService.GetApplication:output_type -> client.v1.GetApplicationResponse
-	5,  // 12: client.v1.ApplicationService.ListApplicationsByOwner:output_type -> client.v1.ListApplicationsByOwnerResponse
-	7,  // 13: client.v1.ClientService.CreateClient:output_type -> client.v1.CreateClientResponse
-	9,  // 14: client.v1.ClientService.RefreshClientSecret:output_type -> client.v1.RefreshClientSecretResponse
-	11, // 15: client.v1.ClientService.GetClient:output_type -> client.v1.GetClientResponse
-	13, // 16: client.v1.ClientService.VerifyClientSecret:output_type -> client.v1.VerifyClientSecretResponse
-	15, // 17: client.v1.ClientService.ListClients:output_type -> client.v1.ListClientsResponse
-	10, // [10:18] is the sub-list for method output_type
-	2,  // [2:10] is the sub-list for method input_type
-	2,  // [2:2] is the sub-list for extension type_name
-	2,  // [2:2] is the sub-list for extension extendee
-	0,  // [0:2] is the sub-list for field type_name
+	3,  // 1: client.v1.ListApplicationsResponse.applications:type_name -> client.v1.GetApplicationResponse
+	13, // 2: client.v1.ListClientsResponse.clients:type_name -> client.v1.GetClientResponse
+	0,  // 3: client.v1.ApplicationService.RegisterApplication:input_type -> client.v1.RegisterApplicationRequest
+	2,  // 4: client.v1.ApplicationService.GetApplication:input_type -> client.v1.GetApplicationRequest
+	4,  // 5: client.v1.ApplicationService.ListApplicationsByOwner:input_type -> client.v1.ListApplicationsByOwnerRequest
+	6,  // 6: client.v1.ApplicationService.ListApplications:input_type -> client.v1.ListApplicationsRequest
+	8,  // 7: client.v1.ClientService.CreateClient:input_type -> client.v1.CreateClientRequest
+	10, // 8: client.v1.ClientService.RefreshClientSecret:input_type -> client.v1.RefreshClientSecretRequest
+	12, // 9: client.v1.ClientService.GetClient:input_type -> client.v1.GetClientRequest
+	14, // 10: client.v1.ClientService.VerifyClientSecret:input_type -> client.v1.VerifyClientSecretRequest
+	16, // 11: client.v1.ClientService.ListClients:input_type -> client.v1.ListClientsRequest
+	1,  // 12: client.v1.ApplicationService.RegisterApplication:output_type -> client.v1.RegisterApplicationResponse
+	3,  // 13: client.v1.ApplicationService.GetApplication:output_type -> client.v1.GetApplicationResponse
+	5,  // 14: client.v1.ApplicationService.ListApplicationsByOwner:output_type -> client.v1.ListApplicationsByOwnerResponse
+	7,  // 15: client.v1.ApplicationService.ListApplications:output_type -> client.v1.ListApplicationsResponse
+	9,  // 16: client.v1.ClientService.CreateClient:output_type -> client.v1.CreateClientResponse
+	11, // 17: client.v1.ClientService.RefreshClientSecret:output_type -> client.v1.RefreshClientSecretResponse
+	13, // 18: client.v1.ClientService.GetClient:output_type -> client.v1.GetClientResponse
+	15, // 19: client.v1.ClientService.VerifyClientSecret:output_type -> client.v1.VerifyClientSecretResponse
+	17, // 20: client.v1.ClientService.ListClients:output_type -> client.v1.ListClientsResponse
+	12, // [12:21] is the sub-list for method output_type
+	3,  // [3:12] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_v1_client_client_management_proto_init() }
@@ -1164,7 +1298,7 @@ func file_v1_client_client_management_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_client_client_management_proto_rawDesc), len(file_v1_client_client_management_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   16,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   2,
 		},

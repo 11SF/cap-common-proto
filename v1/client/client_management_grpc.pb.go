@@ -22,6 +22,7 @@ const (
 	ApplicationService_RegisterApplication_FullMethodName     = "/client.v1.ApplicationService/RegisterApplication"
 	ApplicationService_GetApplication_FullMethodName          = "/client.v1.ApplicationService/GetApplication"
 	ApplicationService_ListApplicationsByOwner_FullMethodName = "/client.v1.ApplicationService/ListApplicationsByOwner"
+	ApplicationService_ListApplications_FullMethodName        = "/client.v1.ApplicationService/ListApplications"
 )
 
 // ApplicationServiceClient is the client API for ApplicationService service.
@@ -34,6 +35,8 @@ type ApplicationServiceClient interface {
 	RegisterApplication(ctx context.Context, in *RegisterApplicationRequest, opts ...grpc.CallOption) (*RegisterApplicationResponse, error)
 	GetApplication(ctx context.Context, in *GetApplicationRequest, opts ...grpc.CallOption) (*GetApplicationResponse, error)
 	ListApplicationsByOwner(ctx context.Context, in *ListApplicationsByOwnerRequest, opts ...grpc.CallOption) (*ListApplicationsByOwnerResponse, error)
+	// ListApplications returns ALL applications (admin/ops portal), paged
+	ListApplications(ctx context.Context, in *ListApplicationsRequest, opts ...grpc.CallOption) (*ListApplicationsResponse, error)
 }
 
 type applicationServiceClient struct {
@@ -74,6 +77,16 @@ func (c *applicationServiceClient) ListApplicationsByOwner(ctx context.Context, 
 	return out, nil
 }
 
+func (c *applicationServiceClient) ListApplications(ctx context.Context, in *ListApplicationsRequest, opts ...grpc.CallOption) (*ListApplicationsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListApplicationsResponse)
+	err := c.cc.Invoke(ctx, ApplicationService_ListApplications_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ApplicationServiceServer is the server API for ApplicationService service.
 // All implementations must embed UnimplementedApplicationServiceServer
 // for forward compatibility.
@@ -84,6 +97,8 @@ type ApplicationServiceServer interface {
 	RegisterApplication(context.Context, *RegisterApplicationRequest) (*RegisterApplicationResponse, error)
 	GetApplication(context.Context, *GetApplicationRequest) (*GetApplicationResponse, error)
 	ListApplicationsByOwner(context.Context, *ListApplicationsByOwnerRequest) (*ListApplicationsByOwnerResponse, error)
+	// ListApplications returns ALL applications (admin/ops portal), paged
+	ListApplications(context.Context, *ListApplicationsRequest) (*ListApplicationsResponse, error)
 	mustEmbedUnimplementedApplicationServiceServer()
 }
 
@@ -102,6 +117,9 @@ func (UnimplementedApplicationServiceServer) GetApplication(context.Context, *Ge
 }
 func (UnimplementedApplicationServiceServer) ListApplicationsByOwner(context.Context, *ListApplicationsByOwnerRequest) (*ListApplicationsByOwnerResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListApplicationsByOwner not implemented")
+}
+func (UnimplementedApplicationServiceServer) ListApplications(context.Context, *ListApplicationsRequest) (*ListApplicationsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListApplications not implemented")
 }
 func (UnimplementedApplicationServiceServer) mustEmbedUnimplementedApplicationServiceServer() {}
 func (UnimplementedApplicationServiceServer) testEmbeddedByValue()                            {}
@@ -178,6 +196,24 @@ func _ApplicationService_ListApplicationsByOwner_Handler(srv interface{}, ctx co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ApplicationService_ListApplications_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListApplicationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ApplicationServiceServer).ListApplications(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ApplicationService_ListApplications_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ApplicationServiceServer).ListApplications(ctx, req.(*ListApplicationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ApplicationService_ServiceDesc is the grpc.ServiceDesc for ApplicationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -196,6 +232,10 @@ var ApplicationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListApplicationsByOwner",
 			Handler:    _ApplicationService_ListApplicationsByOwner_Handler,
+		},
+		{
+			MethodName: "ListApplications",
+			Handler:    _ApplicationService_ListApplications_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

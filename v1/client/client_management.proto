@@ -10,6 +10,8 @@ service ApplicationService {
   rpc RegisterApplication(RegisterApplicationRequest) returns (RegisterApplicationResponse);
   rpc GetApplication(GetApplicationRequest) returns (GetApplicationResponse);
   rpc ListApplicationsByOwner(ListApplicationsByOwnerRequest) returns (ListApplicationsByOwnerResponse);
+  // ListApplications returns ALL applications (admin/ops portal), paged
+  rpc ListApplications(ListApplicationsRequest) returns (ListApplicationsResponse);
 }
 
 // ClientService is owned by the client aggregate: OAuth2 client_id/secret
@@ -61,6 +63,18 @@ message ListApplicationsByOwnerRequest {
 
 message ListApplicationsByOwnerResponse {
   repeated GetApplicationResponse applications = 1;
+}
+
+message ListApplicationsRequest {
+  int32 page = 1;    // 1-based
+  int32 limit = 2;   // default 50, max 200
+}
+
+message ListApplicationsResponse {
+  repeated GetApplicationResponse applications = 1;
+  int32 total = 2;
+  int32 page = 3;
+  int32 limit = 4;
 }
 
 message CreateClientRequest {
