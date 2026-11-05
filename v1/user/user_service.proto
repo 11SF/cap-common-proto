@@ -30,6 +30,9 @@ service UserService {
 
   // ResetPasswordWithToken validates a one-time token and sets a new password
   rpc ResetPasswordWithToken(ResetPasswordWithTokenRequest) returns (ResetPasswordWithTokenResponse);
+
+  // DeleteUser permanently removes a user and all owned applications/clients
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
 }
 
 // CreateUserRequest represents the create user request
@@ -140,4 +143,15 @@ message ResetPasswordWithTokenRequest {
 message ResetPasswordWithTokenResponse {
   bool success = 1;
   string user_id = 2;
+}
+
+message DeleteUserRequest {
+  string user_id = 1;
+}
+
+message DeleteUserResponse {
+  bool success = 1;
+  string user_id = 2;
+  int32 deleted_apps = 3;    // apps ลูกที่ลบไปด้วย
+  int32 deleted_clients = 4; // clients ลูกที่ลบไปด้วย
 }

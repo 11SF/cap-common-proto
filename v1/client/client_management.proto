@@ -12,6 +12,10 @@ service ApplicationService {
   rpc ListApplicationsByOwner(ListApplicationsByOwnerRequest) returns (ListApplicationsByOwnerResponse);
   // ListApplications returns ALL applications (admin/ops portal), paged
   rpc ListApplications(ListApplicationsRequest) returns (ListApplicationsResponse);
+  // UpdateApplication updates name/desc/logo/scope/redirect_uris (owner ไม่เปลี่ยน)
+  rpc UpdateApplication(UpdateApplicationRequest) returns (GetApplicationResponse);
+  // DeleteApplication removes an app and all its clients
+  rpc DeleteApplication(DeleteApplicationRequest) returns (DeleteApplicationResponse);
 }
 
 // ClientService is owned by the client aggregate: OAuth2 client_id/secret
@@ -24,6 +28,8 @@ service ClientService {
   rpc VerifyClientSecret(VerifyClientSecretRequest) returns (VerifyClientSecretResponse);
   // ListClients returns all clients (admin/ops portal), optionally filtered by app
   rpc ListClients(ListClientsRequest) returns (ListClientsResponse);
+  // DeleteClient permanently removes a client
+  rpc DeleteClient(DeleteClientRequest) returns (DeleteClientResponse);
 }
 
 message RegisterApplicationRequest {
@@ -75,6 +81,27 @@ message ListApplicationsResponse {
   int32 total = 2;
   int32 page = 3;
   int32 limit = 4;
+}
+
+message UpdateApplicationRequest {
+  string app_id = 1;
+  string owner_user_id = 2; // verify ownership
+  string app_name = 3;
+  string app_desc = 4;
+  string logo_url = 5;
+  repeated string scope = 6;
+  repeated string redirect_uris = 7;
+}
+
+message DeleteApplicationRequest {
+  string app_id = 1;
+  string owner_user_id = 2; // verify ownership
+}
+
+message DeleteApplicationResponse {
+  bool success = 1;
+  string app_id = 2;
+  int32 deleted_clients = 3;
 }
 
 message CreateClientRequest {
@@ -135,4 +162,14 @@ message ListClientsResponse {
   int32 total = 2;
   int32 page = 3;
   int32 limit = 4;
+}
+
+message DeleteClientRequest {
+  string client_id = 1;
+  string owner_user_id = 2; // verify ownership ผ่าน app
+}
+
+message DeleteClientResponse {
+  bool success = 1;
+  string client_id = 2;
 }

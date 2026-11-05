@@ -27,6 +27,7 @@ const (
 	UserService_ListUsers_FullMethodName                  = "/user.v1.UserService/ListUsers"
 	UserService_GeneratePasswordResetToken_FullMethodName = "/user.v1.UserService/GeneratePasswordResetToken"
 	UserService_ResetPasswordWithToken_FullMethodName     = "/user.v1.UserService/ResetPasswordWithToken"
+	UserService_DeleteUser_FullMethodName                 = "/user.v1.UserService/DeleteUser"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -52,6 +53,8 @@ type UserServiceClient interface {
 	GeneratePasswordResetToken(ctx context.Context, in *GeneratePasswordResetTokenRequest, opts ...grpc.CallOption) (*GeneratePasswordResetTokenResponse, error)
 	// ResetPasswordWithToken validates a one-time token and sets a new password
 	ResetPasswordWithToken(ctx context.Context, in *ResetPasswordWithTokenRequest, opts ...grpc.CallOption) (*ResetPasswordWithTokenResponse, error)
+	// DeleteUser permanently removes a user and all owned applications/clients
+	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error)
 }
 
 type userServiceClient struct {
@@ -142,6 +145,16 @@ func (c *userServiceClient) ResetPasswordWithToken(ctx context.Context, in *Rese
 	return out, nil
 }
 
+func (c *userServiceClient) DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteUserResponse)
+	err := c.cc.Invoke(ctx, UserService_DeleteUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility.
@@ -165,6 +178,8 @@ type UserServiceServer interface {
 	GeneratePasswordResetToken(context.Context, *GeneratePasswordResetTokenRequest) (*GeneratePasswordResetTokenResponse, error)
 	// ResetPasswordWithToken validates a one-time token and sets a new password
 	ResetPasswordWithToken(context.Context, *ResetPasswordWithTokenRequest) (*ResetPasswordWithTokenResponse, error)
+	// DeleteUser permanently removes a user and all owned applications/clients
+	DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -198,6 +213,9 @@ func (UnimplementedUserServiceServer) GeneratePasswordResetToken(context.Context
 }
 func (UnimplementedUserServiceServer) ResetPasswordWithToken(context.Context, *ResetPasswordWithTokenRequest) (*ResetPasswordWithTokenResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ResetPasswordWithToken not implemented")
+}
+func (UnimplementedUserServiceServer) DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteUser not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 func (UnimplementedUserServiceServer) testEmbeddedByValue()                     {}
@@ -364,6 +382,24 @@ func _UserService_ResetPasswordWithToken_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).DeleteUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_DeleteUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).DeleteUser(ctx, req.(*DeleteUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -402,6 +438,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ResetPasswordWithToken",
 			Handler:    _UserService_ResetPasswordWithToken_Handler,
+		},
+		{
+			MethodName: "DeleteUser",
+			Handler:    _UserService_DeleteUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

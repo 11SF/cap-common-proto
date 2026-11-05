@@ -976,6 +976,118 @@ func (x *ResetPasswordWithTokenResponse) GetUserId() string {
 	return ""
 }
 
+type DeleteUserRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteUserRequest) Reset() {
+	*x = DeleteUserRequest{}
+	mi := &file_v1_user_user_service_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteUserRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteUserRequest) ProtoMessage() {}
+
+func (x *DeleteUserRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_user_user_service_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteUserRequest.ProtoReflect.Descriptor instead.
+func (*DeleteUserRequest) Descriptor() ([]byte, []int) {
+	return file_v1_user_user_service_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *DeleteUserRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+type DeleteUserResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Success        bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	UserId         string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	DeletedApps    int32                  `protobuf:"varint,3,opt,name=deleted_apps,json=deletedApps,proto3" json:"deleted_apps,omitempty"`          // apps ลูกที่ลบไปด้วย
+	DeletedClients int32                  `protobuf:"varint,4,opt,name=deleted_clients,json=deletedClients,proto3" json:"deleted_clients,omitempty"` // clients ลูกที่ลบไปด้วย
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *DeleteUserResponse) Reset() {
+	*x = DeleteUserResponse{}
+	mi := &file_v1_user_user_service_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteUserResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteUserResponse) ProtoMessage() {}
+
+func (x *DeleteUserResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_user_user_service_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteUserResponse.ProtoReflect.Descriptor instead.
+func (*DeleteUserResponse) Descriptor() ([]byte, []int) {
+	return file_v1_user_user_service_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *DeleteUserResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *DeleteUserResponse) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *DeleteUserResponse) GetDeletedApps() int32 {
+	if x != nil {
+		return x.DeletedApps
+	}
+	return 0
+}
+
+func (x *DeleteUserResponse) GetDeletedClients() int32 {
+	if x != nil {
+		return x.DeletedClients
+	}
+	return 0
+}
+
 var File_v1_user_user_service_proto protoreflect.FileDescriptor
 
 const file_v1_user_user_service_proto_rawDesc = "" +
@@ -1061,7 +1173,14 @@ const file_v1_user_user_service_proto_rawDesc = "" +
 	"\fnew_password\x18\x02 \x01(\tR\vnewPassword\"S\n" +
 	"\x1eResetPasswordWithTokenResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x17\n" +
-	"\auser_id\x18\x02 \x01(\tR\x06userId2\xad\x05\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\",\n" +
+	"\x11DeleteUserRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\"\x93\x01\n" +
+	"\x12DeleteUserResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\x12!\n" +
+	"\fdeleted_apps\x18\x03 \x01(\x05R\vdeletedApps\x12'\n" +
+	"\x0fdeleted_clients\x18\x04 \x01(\x05R\x0edeletedClients2\xf4\x05\n" +
 	"\vUserService\x12E\n" +
 	"\n" +
 	"CreateUser\x12\x1a.user.v1.CreateUserRequest\x1a\x1b.user.v1.CreateUserResponse\x12<\n" +
@@ -1072,7 +1191,9 @@ const file_v1_user_user_service_proto_rawDesc = "" +
 	"\x13ValidateCredentials\x12#.user.v1.ValidateCredentialsRequest\x1a$.user.v1.ValidateCredentialsResponse\x12B\n" +
 	"\tListUsers\x12\x19.user.v1.ListUsersRequest\x1a\x1a.user.v1.ListUsersResponse\x12u\n" +
 	"\x1aGeneratePasswordResetToken\x12*.user.v1.GeneratePasswordResetTokenRequest\x1a+.user.v1.GeneratePasswordResetTokenResponse\x12i\n" +
-	"\x16ResetPasswordWithToken\x12&.user.v1.ResetPasswordWithTokenRequest\x1a'.user.v1.ResetPasswordWithTokenResponseB1Z/github.com/11SF/cap-common-proto/v1/user;userv1b\x06proto3"
+	"\x16ResetPasswordWithToken\x12&.user.v1.ResetPasswordWithTokenRequest\x1a'.user.v1.ResetPasswordWithTokenResponse\x12E\n" +
+	"\n" +
+	"DeleteUser\x12\x1a.user.v1.DeleteUserRequest\x1a\x1b.user.v1.DeleteUserResponseB1Z/github.com/11SF/cap-common-proto/v1/user;userv1b\x06proto3"
 
 var (
 	file_v1_user_user_service_proto_rawDescOnce sync.Once
@@ -1086,7 +1207,7 @@ func file_v1_user_user_service_proto_rawDescGZIP() []byte {
 	return file_v1_user_user_service_proto_rawDescData
 }
 
-var file_v1_user_user_service_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_v1_user_user_service_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_v1_user_user_service_proto_goTypes = []any{
 	(*CreateUserRequest)(nil),                  // 0: user.v1.CreateUserRequest
 	(*CreateUserResponse)(nil),                 // 1: user.v1.CreateUserResponse
@@ -1103,14 +1224,16 @@ var file_v1_user_user_service_proto_goTypes = []any{
 	(*GeneratePasswordResetTokenResponse)(nil), // 12: user.v1.GeneratePasswordResetTokenResponse
 	(*ResetPasswordWithTokenRequest)(nil),      // 13: user.v1.ResetPasswordWithTokenRequest
 	(*ResetPasswordWithTokenResponse)(nil),     // 14: user.v1.ResetPasswordWithTokenResponse
-	nil,                                        // 15: user.v1.CreateUserRequest.CustomAttributesEntry
-	nil,                                        // 16: user.v1.GetUserResponse.CustomAttributesEntry
-	nil,                                        // 17: user.v1.UpdateUserRequest.CustomAttributesEntry
+	(*DeleteUserRequest)(nil),                  // 15: user.v1.DeleteUserRequest
+	(*DeleteUserResponse)(nil),                 // 16: user.v1.DeleteUserResponse
+	nil,                                        // 17: user.v1.CreateUserRequest.CustomAttributesEntry
+	nil,                                        // 18: user.v1.GetUserResponse.CustomAttributesEntry
+	nil,                                        // 19: user.v1.UpdateUserRequest.CustomAttributesEntry
 }
 var file_v1_user_user_service_proto_depIdxs = []int32{
-	15, // 0: user.v1.CreateUserRequest.custom_attributes:type_name -> user.v1.CreateUserRequest.CustomAttributesEntry
-	16, // 1: user.v1.GetUserResponse.custom_attributes:type_name -> user.v1.GetUserResponse.CustomAttributesEntry
-	17, // 2: user.v1.UpdateUserRequest.custom_attributes:type_name -> user.v1.UpdateUserRequest.CustomAttributesEntry
+	17, // 0: user.v1.CreateUserRequest.custom_attributes:type_name -> user.v1.CreateUserRequest.CustomAttributesEntry
+	18, // 1: user.v1.GetUserResponse.custom_attributes:type_name -> user.v1.GetUserResponse.CustomAttributesEntry
+	19, // 2: user.v1.UpdateUserRequest.custom_attributes:type_name -> user.v1.UpdateUserRequest.CustomAttributesEntry
 	4,  // 3: user.v1.ListUsersResponse.users:type_name -> user.v1.GetUserResponse
 	0,  // 4: user.v1.UserService.CreateUser:input_type -> user.v1.CreateUserRequest
 	2,  // 5: user.v1.UserService.GetUser:input_type -> user.v1.GetUserRequest
@@ -1120,16 +1243,18 @@ var file_v1_user_user_service_proto_depIdxs = []int32{
 	9,  // 9: user.v1.UserService.ListUsers:input_type -> user.v1.ListUsersRequest
 	11, // 10: user.v1.UserService.GeneratePasswordResetToken:input_type -> user.v1.GeneratePasswordResetTokenRequest
 	13, // 11: user.v1.UserService.ResetPasswordWithToken:input_type -> user.v1.ResetPasswordWithTokenRequest
-	1,  // 12: user.v1.UserService.CreateUser:output_type -> user.v1.CreateUserResponse
-	4,  // 13: user.v1.UserService.GetUser:output_type -> user.v1.GetUserResponse
-	4,  // 14: user.v1.UserService.GetUserByEmail:output_type -> user.v1.GetUserResponse
-	6,  // 15: user.v1.UserService.UpdateUser:output_type -> user.v1.UpdateUserResponse
-	8,  // 16: user.v1.UserService.ValidateCredentials:output_type -> user.v1.ValidateCredentialsResponse
-	10, // 17: user.v1.UserService.ListUsers:output_type -> user.v1.ListUsersResponse
-	12, // 18: user.v1.UserService.GeneratePasswordResetToken:output_type -> user.v1.GeneratePasswordResetTokenResponse
-	14, // 19: user.v1.UserService.ResetPasswordWithToken:output_type -> user.v1.ResetPasswordWithTokenResponse
-	12, // [12:20] is the sub-list for method output_type
-	4,  // [4:12] is the sub-list for method input_type
+	15, // 12: user.v1.UserService.DeleteUser:input_type -> user.v1.DeleteUserRequest
+	1,  // 13: user.v1.UserService.CreateUser:output_type -> user.v1.CreateUserResponse
+	4,  // 14: user.v1.UserService.GetUser:output_type -> user.v1.GetUserResponse
+	4,  // 15: user.v1.UserService.GetUserByEmail:output_type -> user.v1.GetUserResponse
+	6,  // 16: user.v1.UserService.UpdateUser:output_type -> user.v1.UpdateUserResponse
+	8,  // 17: user.v1.UserService.ValidateCredentials:output_type -> user.v1.ValidateCredentialsResponse
+	10, // 18: user.v1.UserService.ListUsers:output_type -> user.v1.ListUsersResponse
+	12, // 19: user.v1.UserService.GeneratePasswordResetToken:output_type -> user.v1.GeneratePasswordResetTokenResponse
+	14, // 20: user.v1.UserService.ResetPasswordWithToken:output_type -> user.v1.ResetPasswordWithTokenResponse
+	16, // 21: user.v1.UserService.DeleteUser:output_type -> user.v1.DeleteUserResponse
+	13, // [13:22] is the sub-list for method output_type
+	4,  // [4:13] is the sub-list for method input_type
 	4,  // [4:4] is the sub-list for extension type_name
 	4,  // [4:4] is the sub-list for extension extendee
 	0,  // [0:4] is the sub-list for field type_name
@@ -1146,7 +1271,7 @@ func file_v1_user_user_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_user_user_service_proto_rawDesc), len(file_v1_user_user_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   18,
+			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -23,6 +23,8 @@ const (
 	ApplicationService_GetApplication_FullMethodName          = "/client.v1.ApplicationService/GetApplication"
 	ApplicationService_ListApplicationsByOwner_FullMethodName = "/client.v1.ApplicationService/ListApplicationsByOwner"
 	ApplicationService_ListApplications_FullMethodName        = "/client.v1.ApplicationService/ListApplications"
+	ApplicationService_UpdateApplication_FullMethodName       = "/client.v1.ApplicationService/UpdateApplication"
+	ApplicationService_DeleteApplication_FullMethodName       = "/client.v1.ApplicationService/DeleteApplication"
 )
 
 // ApplicationServiceClient is the client API for ApplicationService service.
@@ -37,6 +39,10 @@ type ApplicationServiceClient interface {
 	ListApplicationsByOwner(ctx context.Context, in *ListApplicationsByOwnerRequest, opts ...grpc.CallOption) (*ListApplicationsByOwnerResponse, error)
 	// ListApplications returns ALL applications (admin/ops portal), paged
 	ListApplications(ctx context.Context, in *ListApplicationsRequest, opts ...grpc.CallOption) (*ListApplicationsResponse, error)
+	// UpdateApplication updates name/desc/logo/scope/redirect_uris (owner ไม่เปลี่ยน)
+	UpdateApplication(ctx context.Context, in *UpdateApplicationRequest, opts ...grpc.CallOption) (*GetApplicationResponse, error)
+	// DeleteApplication removes an app and all its clients
+	DeleteApplication(ctx context.Context, in *DeleteApplicationRequest, opts ...grpc.CallOption) (*DeleteApplicationResponse, error)
 }
 
 type applicationServiceClient struct {
@@ -87,6 +93,26 @@ func (c *applicationServiceClient) ListApplications(ctx context.Context, in *Lis
 	return out, nil
 }
 
+func (c *applicationServiceClient) UpdateApplication(ctx context.Context, in *UpdateApplicationRequest, opts ...grpc.CallOption) (*GetApplicationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetApplicationResponse)
+	err := c.cc.Invoke(ctx, ApplicationService_UpdateApplication_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *applicationServiceClient) DeleteApplication(ctx context.Context, in *DeleteApplicationRequest, opts ...grpc.CallOption) (*DeleteApplicationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteApplicationResponse)
+	err := c.cc.Invoke(ctx, ApplicationService_DeleteApplication_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ApplicationServiceServer is the server API for ApplicationService service.
 // All implementations must embed UnimplementedApplicationServiceServer
 // for forward compatibility.
@@ -99,6 +125,10 @@ type ApplicationServiceServer interface {
 	ListApplicationsByOwner(context.Context, *ListApplicationsByOwnerRequest) (*ListApplicationsByOwnerResponse, error)
 	// ListApplications returns ALL applications (admin/ops portal), paged
 	ListApplications(context.Context, *ListApplicationsRequest) (*ListApplicationsResponse, error)
+	// UpdateApplication updates name/desc/logo/scope/redirect_uris (owner ไม่เปลี่ยน)
+	UpdateApplication(context.Context, *UpdateApplicationRequest) (*GetApplicationResponse, error)
+	// DeleteApplication removes an app and all its clients
+	DeleteApplication(context.Context, *DeleteApplicationRequest) (*DeleteApplicationResponse, error)
 	mustEmbedUnimplementedApplicationServiceServer()
 }
 
@@ -120,6 +150,12 @@ func (UnimplementedApplicationServiceServer) ListApplicationsByOwner(context.Con
 }
 func (UnimplementedApplicationServiceServer) ListApplications(context.Context, *ListApplicationsRequest) (*ListApplicationsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListApplications not implemented")
+}
+func (UnimplementedApplicationServiceServer) UpdateApplication(context.Context, *UpdateApplicationRequest) (*GetApplicationResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateApplication not implemented")
+}
+func (UnimplementedApplicationServiceServer) DeleteApplication(context.Context, *DeleteApplicationRequest) (*DeleteApplicationResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteApplication not implemented")
 }
 func (UnimplementedApplicationServiceServer) mustEmbedUnimplementedApplicationServiceServer() {}
 func (UnimplementedApplicationServiceServer) testEmbeddedByValue()                            {}
@@ -214,6 +250,42 @@ func _ApplicationService_ListApplications_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ApplicationService_UpdateApplication_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateApplicationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ApplicationServiceServer).UpdateApplication(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ApplicationService_UpdateApplication_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ApplicationServiceServer).UpdateApplication(ctx, req.(*UpdateApplicationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ApplicationService_DeleteApplication_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteApplicationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ApplicationServiceServer).DeleteApplication(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ApplicationService_DeleteApplication_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ApplicationServiceServer).DeleteApplication(ctx, req.(*DeleteApplicationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ApplicationService_ServiceDesc is the grpc.ServiceDesc for ApplicationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -237,6 +309,14 @@ var ApplicationService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "ListApplications",
 			Handler:    _ApplicationService_ListApplications_Handler,
 		},
+		{
+			MethodName: "UpdateApplication",
+			Handler:    _ApplicationService_UpdateApplication_Handler,
+		},
+		{
+			MethodName: "DeleteApplication",
+			Handler:    _ApplicationService_DeleteApplication_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "v1/client/client_management.proto",
@@ -248,6 +328,7 @@ const (
 	ClientService_GetClient_FullMethodName           = "/client.v1.ClientService/GetClient"
 	ClientService_VerifyClientSecret_FullMethodName  = "/client.v1.ClientService/VerifyClientSecret"
 	ClientService_ListClients_FullMethodName         = "/client.v1.ClientService/ListClients"
+	ClientService_DeleteClient_FullMethodName        = "/client.v1.ClientService/DeleteClient"
 )
 
 // ClientServiceClient is the client API for ClientService service.
@@ -264,6 +345,8 @@ type ClientServiceClient interface {
 	VerifyClientSecret(ctx context.Context, in *VerifyClientSecretRequest, opts ...grpc.CallOption) (*VerifyClientSecretResponse, error)
 	// ListClients returns all clients (admin/ops portal), optionally filtered by app
 	ListClients(ctx context.Context, in *ListClientsRequest, opts ...grpc.CallOption) (*ListClientsResponse, error)
+	// DeleteClient permanently removes a client
+	DeleteClient(ctx context.Context, in *DeleteClientRequest, opts ...grpc.CallOption) (*DeleteClientResponse, error)
 }
 
 type clientServiceClient struct {
@@ -324,6 +407,16 @@ func (c *clientServiceClient) ListClients(ctx context.Context, in *ListClientsRe
 	return out, nil
 }
 
+func (c *clientServiceClient) DeleteClient(ctx context.Context, in *DeleteClientRequest, opts ...grpc.CallOption) (*DeleteClientResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteClientResponse)
+	err := c.cc.Invoke(ctx, ClientService_DeleteClient_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ClientServiceServer is the server API for ClientService service.
 // All implementations must embed UnimplementedClientServiceServer
 // for forward compatibility.
@@ -338,6 +431,8 @@ type ClientServiceServer interface {
 	VerifyClientSecret(context.Context, *VerifyClientSecretRequest) (*VerifyClientSecretResponse, error)
 	// ListClients returns all clients (admin/ops portal), optionally filtered by app
 	ListClients(context.Context, *ListClientsRequest) (*ListClientsResponse, error)
+	// DeleteClient permanently removes a client
+	DeleteClient(context.Context, *DeleteClientRequest) (*DeleteClientResponse, error)
 	mustEmbedUnimplementedClientServiceServer()
 }
 
@@ -362,6 +457,9 @@ func (UnimplementedClientServiceServer) VerifyClientSecret(context.Context, *Ver
 }
 func (UnimplementedClientServiceServer) ListClients(context.Context, *ListClientsRequest) (*ListClientsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListClients not implemented")
+}
+func (UnimplementedClientServiceServer) DeleteClient(context.Context, *DeleteClientRequest) (*DeleteClientResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteClient not implemented")
 }
 func (UnimplementedClientServiceServer) mustEmbedUnimplementedClientServiceServer() {}
 func (UnimplementedClientServiceServer) testEmbeddedByValue()                       {}
@@ -474,6 +572,24 @@ func _ClientService_ListClients_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ClientService_DeleteClient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteClientRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClientServiceServer).DeleteClient(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ClientService_DeleteClient_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientServiceServer).DeleteClient(ctx, req.(*DeleteClientRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ClientService_ServiceDesc is the grpc.ServiceDesc for ClientService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -500,6 +616,10 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListClients",
 			Handler:    _ClientService_ListClients_Handler,
+		},
+		{
+			MethodName: "DeleteClient",
+			Handler:    _ClientService_DeleteClient_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
