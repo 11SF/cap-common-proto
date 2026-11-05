@@ -20,6 +20,8 @@ service ClientService {
   rpc RefreshClientSecret(RefreshClientSecretRequest) returns (RefreshClientSecretResponse);
   rpc GetClient(GetClientRequest) returns (GetClientResponse);
   rpc VerifyClientSecret(VerifyClientSecretRequest) returns (VerifyClientSecretResponse);
+  // ListClients returns all clients (admin/ops portal), optionally filtered by app
+  rpc ListClients(ListClientsRequest) returns (ListClientsResponse);
 }
 
 message RegisterApplicationRequest {
@@ -106,4 +108,17 @@ message VerifyClientSecretRequest {
 message VerifyClientSecretResponse {
   bool is_valid = 1;
   string app_id = 2;
+}
+
+message ListClientsRequest {
+  string app_id = 1; // optional filter
+  int32 page = 2;    // 1-based
+  int32 limit = 3;   // default 50, max 200
+}
+
+message ListClientsResponse {
+  repeated GetClientResponse clients = 1;
+  int32 total = 2;
+  int32 page = 3;
+  int32 limit = 4;
 }

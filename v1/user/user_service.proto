@@ -20,6 +20,16 @@ service UserService {
 
   // ValidateCredentials validates user credentials for login
   rpc ValidateCredentials(ValidateCredentialsRequest) returns (ValidateCredentialsResponse);
+
+  // ListUsers returns a paged list of users (for admin/ops portal)
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
+
+  // GeneratePasswordResetToken creates a one-time reset token for a user
+  // (admin-initiated — bypasses old password). Returns raw token ONCE.
+  rpc GeneratePasswordResetToken(GeneratePasswordResetTokenRequest) returns (GeneratePasswordResetTokenResponse);
+
+  // ResetPasswordWithToken validates a one-time token and sets a new password
+  rpc ResetPasswordWithToken(ResetPasswordWithTokenRequest) returns (ResetPasswordWithTokenResponse);
 }
 
 // CreateUserRequest represents the create user request
@@ -92,4 +102,42 @@ message ValidateCredentialsResponse {
   string username = 3;
   string email = 4;
   string picture_profile = 5;
+}
+
+// ListUsersRequest — paged search (search = username/email LIKE)
+message ListUsersRequest {
+  string search = 1;
+  int32 page = 2;    // 1-based
+  int32 limit = 3;   // default 50, max 200
+}
+
+// ListUsersResponse — paged user list
+message ListUsersResponse {
+  repeated GetUserResponse users = 1;
+  int32 total = 2;
+  int32 page = 3;
+  int32 limit = 4;
+}
+
+// GeneratePasswordResetTokenRequest — admin-initiated reset (bypass old password)
+message GeneratePasswordResetTokenRequest {
+  string user_id = 1;
+}
+
+// GeneratePasswordResetTokenResponse — raw token, shown ONCE
+message GeneratePasswordResetTokenResponse {
+  string reset_token = 1;
+  string expires_at = 2; // RFC3339
+}
+
+// ResetPasswordWithTokenRequest — user sets new password with one-time token
+message ResetPasswordWithTokenRequest {
+  string reset_token = 1;
+  string new_password = 2;
+}
+
+// ResetPasswordWithTokenResponse — success = password changed
+message ResetPasswordWithTokenResponse {
+  bool success = 1;
+  string user_id = 2;
 }
